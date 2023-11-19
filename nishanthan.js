@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var xScale = d3.scaleLinear().range([20, 1053]); // width of the plot
     var yScale = d3.scaleLinear().range([1137, 7]); // height of the plot
     var colorScale = d3.scaleLinear()
-        .range(["blue", "red"]) // darker green to darker red // color range from green to red
+        .range(["lightgreen", "darkred"]) // darker green to darker red // color range from green to red
 
     // Load CSV data and overlay points on the image
     d3.csv("./data/nishanthan/Apartments.csv").then(function (data) {
@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
             d.x = +coordinates[0];
             d.y = +coordinates[1];
             d.rentalCost = +d.rentalCost;
+            d.maxOccupancy = +d.maxOccupancy;
+            d.numberOfRooms = +d.numberOfRooms;
         });
 
         // Update the scales based on the data range
@@ -38,8 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .attr("cy", function (d) {
                 return yScale(d.y);
             })
-            .attr("r", 5) // Set the radius of the circle
-            .attr("fill", function (d) {
+            .attr("r", function (d) {
+                // Adjust the radius based on the ratio of number of rooms to maxOccupancy
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7; // You can adjust the multiplier for a better visual effect
+            })
+                .attr("fill", function (d) {
                 return colorScale(d.rentalCost);
             });
 
