@@ -1,4 +1,4 @@
-apartmentId,rentalCost,maxOccupancy ,numberOfRooms,location,buildingId
+apartmentId,rentalCost,maxOccupancy,numberOfRooms,location,buildingId
 1,768.16,2,4,POINT (1077.6979444315298 648.4427163702453),340
 2,1014.55,2,1,POINT (-185.9292838076562 1520.3270983045118),752
 3,1057.39,4,3,POINT (2123.0141855392585 5126.753457243003),639
