@@ -44,23 +44,46 @@ document.addEventListener("DOMContentLoaded", function () {
             .stop(); // Stop the simulation initially to adjust the circles based on the forces
 
         // Run the simulation for a few iterations to adjust the circle positions
-        for (var i = 0; i < 100; ++i) simulation.tick();
+        for (var i = 0; i < 200; ++i) simulation.tick();
 
         // Add circles for each point on the background SVG
-        backgroundSvg.selectAll("circle")
-            .data(data)
-            .enter().append("circle")
-            .attr("class", "point")
-            .attr("cx", function (d) {
-                return d.x;
+        // backgroundSvg.selectAll("circle")
+        //     .data(data)
+        //     .enter().append("circle")
+        //     .attr("class", "point")
+        //     .attr("cx", function (d) {
+        //         return d.x;
 
+        //     })
+        //     .attr("cy", function (d) {
+        //         return d.y;
+        //     })
+        //     .attr("r", function (d) {
+        //         // Adjust the radius based on the ratio of number of rooms to maxOccupancy
+        //         return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // You can adjust the multiplier for a better visual effect
+        //     })
+        //     .attr("fill", function (d) {
+        //         return colorScale(d.rentalCost);
+        //     })
+        //     .attr("stroke", "black") // Add black stroke
+        //     .attr("stroke-width", 1);
+
+        // Add squares for each point on the background SVG
+        backgroundSvg.selectAll("rect")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "point")
+            .attr("x", function (d) {
+                return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // Adjust for the square's width
             })
-            .attr("cy", function (d) {
-                return d.y;
+            .attr("y", function (d) {
+                return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // Adjust for the square's height
             })
-            .attr("r", function (d) {
-                // Adjust the radius based on the ratio of number of rooms to maxOccupancy
-                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // You can adjust the multiplier for a better visual effect
+            .attr("width", function (d) {
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10; // Adjust for the square's width
+            })
+            .attr("height", function (d) {
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10; // Adjust for the square's height
             })
             .attr("fill", function (d) {
                 return colorScale(d.rentalCost);
@@ -106,10 +129,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .data(colorScale.domain())
             .enter().append("text")
             .attr("class", "legendText")
-            .attr("x", legendRectSize + legendSpacing*2)
+            .attr("x", legendRectSize + legendSpacing * 2)
             .attr("y", function (d, i) { return (1 - i) * (legendRectSize + legendSpacing * 4) + legendRectSize * 2.65; })
             .attr("dy", "0.35em")
-            .text(function (d) { return Math.round(d < 1000 ? d - 400 : d); }); 
+            .text(function (d) { return Math.round(d < 1000 ? d - 400 : d); });
 
 
     }).catch(function (error) {
