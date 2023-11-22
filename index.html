@@ -61,6 +61,18 @@
         }
 
     </style> -->
+    <style>
+        .utkarsh-tooltip{
+            position: absolute; 
+            display: none; 
+            background-color: white; 
+            border-radius: 10px;
+            border-width: 2px;
+            padding: 10px; 
+            border: solid black;
+            opacity: .95;
+        }
+    </style>
 </head>
 
 <body>
@@ -97,6 +109,7 @@
                 <div class="p-3 svg-container">
                     <textarea class="form-control mb-3" id="utkarsh_description" rows="4" disabled></textarea>
                     <svg id="utkarsh" class="small_svg"></svg>
+                    <div class="utkarsh-tooltip"></div>
                 </div>
             </div>
             <div class="col-md-6 mb-4">
