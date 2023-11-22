@@ -69,3 +69,22 @@ h1 {
     position: relative;
     left: 150px;
 }
+
+
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 10px;
+    width: 320px;
+    height: 230px;
+    font: 13px product-sans;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: none;
+    opacity: .75;
+    font-weight: bold;
+
+}
