@@ -17,46 +17,43 @@ document.addEventListener("DOMContentLoaded", function() {
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // Read the data (assuming the file path and format are correct)
-    d3.csv("data_preprocessing/modified_financial_journal.csv").then(function(data) {
-    // Group the data by month
-    const sumByCategory = Array.from(d3.rollup(data, 
-        v => d3.sum(v, leaf => leaf.total_amount), 
-        d => d.month, 
-        d => d.category
-    ));
-
-    // Map to a structure suitable for d3.stack()
-    let dataset = sumByCategory.map(([month, categories]) => {
-        const entries = { month: d3.timeParse("%Y-%m")(month) };
-        for (const [category, total] of categories) {
-            entries[category] = total;
-        }
-        return entries;
-    });
-
-    function removeKeys(obj, keysToRemove, keysToMultiply) {
-        keysToRemove.forEach(key => {
-          delete obj[key];
-        });
-        keysToMultiply.forEach(key => {
-              obj[key] *= -1;
-        });
-        return obj;
-    }
-
-    dataset = dataset.map(obj => removeKeys({...obj}, ['RentAdjustment', 'Shelter', 'Wage'], ['Food', 'Education', 'Recreation']));
-
-    // List of subgroups (categories)
-    const categories = ["Education", "Food", "Recreation"];
-
-    updateChart(categories, dataset);
     
-    });
 
-    function updateChart(categories, dataset) {
-        console.log(dataset);
+    function updateChart(filename="modified_financial_journal.csv") {
+        const path = "data_preprocessing/" + filename;
+        // Read the data (assuming the file path and format are correct)
+        d3.csv(path).then(function(data) {
+            // Group the data by month
+            const sumByCategory = Array.from(d3.rollup(data, 
+                v => d3.sum(v, leaf => leaf.total_amount), 
+                d => d.month, 
+                d => d.category
+            ));
+        
+            // Map to a structure suitable for d3.stack()
+            let dataset = sumByCategory.map(([month, categories]) => {
+                const entries = { month: d3.timeParse("%Y-%m")(month) };
+                for (const [category, total] of categories) {
+                    entries[category] = total;
+                }
+                return entries;
+            });
+        
+            function removeKeys(obj, keysToRemove, keysToMultiply) {
+                keysToRemove.forEach(key => {
+                  delete obj[key];
+                });
+                keysToMultiply.forEach(key => {
+                      obj[key] *= -1;
+                });
+                return obj;
+            }
+        
+            dataset = dataset.map(obj => removeKeys({...obj}, ['RentAdjustment', 'Shelter', 'Wage'], ['Food', 'Education', 'Recreation']));
+        
+            // List of subgroups (categories)
+            const categories = ["Education", "Food", "Recreation"];
+
         const stackedData = d3.stack()
             .keys(categories)
             (dataset)
@@ -142,8 +139,10 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle");
+            
+            });
     }    
 
-
+    updateChart();
 
 });
