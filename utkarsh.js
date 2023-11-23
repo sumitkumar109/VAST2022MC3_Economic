@@ -227,6 +227,8 @@ document.addEventListener("DOMContentLoaded", function() {
                                 .attr("dy", "0.35em")
                                 .text("End of Study");
 
+                                updateGraph(selectedEducationLevel)
+
           });
 
 
@@ -235,6 +237,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 });
+
+function updateGraph(selectedEducationLevel) {
+
+    if(selectedEducationLevel){
+        svg.selectAll(".startBars, .endBars")
+        .attr("opacity", d => (d.category === selectedEducationLevel) ? 1 : 0.3);
+    }
+}
 
 
 
