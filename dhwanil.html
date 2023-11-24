@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Education Level vs. Jobs/Participants</title>
+    <link rel="stylesheet" type="text/css" href="dhwanil.css">
+</head>
+<body>
+
+    <div id="educationLevels">
+        <input type="radio" id="Low" name="educationLevel" value="Low">
+        <label for="Low">Low</label><br>
+
+        <input type="radio" id="HighSchoolOrCollege" name="educationLevel" value="HighSchoolOrCollege">
+        <label for="HighSchoolOrCollege">High School or College</label><br>
+
+        <input type="radio" id="Bachelors" name="educationLevel" value="Bachelors">
+        <label for="Bachelors">Bachelors</label><br>
+
+        <input type="radio" id="Graduate" name="educationLevel" value="Graduate">
+        <label for="Graduate">Graduate</label>
+    </div>
+
+    <div id="chart"></div>
+    <div id="tooltip" class="tooltip" style="opacity:0;"></div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="dhwanil.js"></script>
+
+</body>
+</html>
