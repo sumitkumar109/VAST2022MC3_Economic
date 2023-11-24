@@ -76,8 +76,8 @@ h1 {
     position: absolute;
     text-align: center;
     padding: 10px;
-    width: 320px;
-    height: 230px;
+    width: 360px;
+    height: 250px;
     font: 13px product-sans;
     background-color: white;
     color: black;
@@ -86,5 +86,6 @@ h1 {
     display: none;
     opacity: .75;
     font-weight: bold;
+    font: Georgia;
 
 }
