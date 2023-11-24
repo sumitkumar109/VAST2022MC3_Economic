@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-function plotInnovativeChart(data) {
+function plotInnovativeChart(data, educationLevel = "ALL") {
     globalExpenseDataset.forEach(d => {
         if (!educationLevelList.includes(d.EducationLevel)) {
             educationLevelList.push(d.EducationLevel)
@@ -71,36 +71,62 @@ function plotInnovativeChart(data) {
         var totalRecreation = 0
         var lengthOfData = 0
         data.forEach(function (d) {
-            if (d.MonthNumber == i) {
-                switch (d.Category) {
-                    case "Wage":
-                        totolWage += d.Amount
-                        break
-                    case "Shelter":
-                        totalShelter += d.Amount
-                        lengthOfData += 1
-                        break
-                    case "Education":
-                        totalEducation += d.Amount
-                        lengthOfData += 1
-                        break
-                    case "RentAdjustment":
-                        totalRentAdjustment += d.Amount
-                        break
-                    case "Food":
-                        totalFood += d.Amount
-                        lengthOfData += 1
-                        break
-                    case "Recreation":
-                        totalRecreation += d.Amount
-                        lengthOfData += 1
-                        break
+            if (educationLevel == "ALL") {
+                if (d.MonthNumber == i) {
+                    switch (d.Category) {
+                        case "Wage":
+                            totolWage += d.Amount
+                            break
+                        case "Shelter":
+                            totalShelter += d.Amount
+                            lengthOfData += 1
+                            break
+                        case "Education":
+                            totalEducation += d.Amount
+                            lengthOfData += 1
+                            break
+                        case "RentAdjustment":
+                            totalRentAdjustment += d.Amount
+                            break
+                        case "Food":
+                            totalFood += d.Amount
+                            lengthOfData += 1
+                            break
+                        case "Recreation":
+                            totalRecreation += d.Amount
+                            lengthOfData += 1
+                            break
+                    }
+                }
+            } else {
+                if (d.MonthNumber == i && d.EducationLevel == educationLevel) {
+                    switch (d.Category) {
+                        case "Wage":
+                            totolWage += d.Amount
+                            break
+                        case "Shelter":
+                            totalShelter += d.Amount
+                            lengthOfData += 1
+                            break
+                        case "Education":
+                            totalEducation += d.Amount
+                            lengthOfData += 1
+                            break
+                        case "RentAdjustment":
+                            totalRentAdjustment += d.Amount
+                            break
+                        case "Food":
+                            totalFood += d.Amount
+                            lengthOfData += 1
+                            break
+                        case "Recreation":
+                            totalRecreation += d.Amount
+                            lengthOfData += 1
+                            break
+                    }
                 }
             }
         })
-        // console.log(i, totolWage, totalShelter, totalEducation, totalRentAdjustment, totalFood, totalRecreation)
-
-
 
         pieData[i - 1] = {
             "MonthNumber": i,
@@ -124,17 +150,16 @@ function plotInnovativeChart(data) {
     plotPieScatter(pieData)
 
 
-
-
-
-
-
-
 }
 
+function updateGraph(educationLevel) {
+    console.log("update graph called......")
+    plotInnovativeChart(globalExpenseDataset, educationLevel)
+}
 
 function plotPieScatter(data) {
     var svg = d3.select("#vanshaj")
+    svg.selectAll("*").remove()
     height = +svg.style("height").replace("px", '');
     width = +svg.style("width").replace("px", '');
     var margin = { top: 10, bottom: 30, left: 35, right: 20 }
@@ -169,8 +194,8 @@ function plotPieScatter(data) {
     tooltipHeight = parseFloat(tooltipHeight);
     var toolTipMargin = { top: 30, bottom: 30, left: 30, right: 30 }
 
-    var innerBarWidth = tooltipWidth - toolTipMargin.left - toolTipMargin.right
-    var innerBarHeight = tooltipHeight - toolTipMargin.top - toolTipMargin.bottom
+    var innerBarWidth = tooltipWidth - toolTipMargin.left - toolTipMargin.right - 30
+    var innerBarHeight = tooltipHeight - toolTipMargin.top - toolTipMargin.bottom - 20
 
     var arc = d3.arc()
         .innerRadius(0)
@@ -212,7 +237,7 @@ function plotPieScatter(data) {
     }
 
     simulation.on("end", (finalEvent) => {
-
+        showPieLegends(chartWidth)
         var pies = g.selectAll(".pieGroup")
             .data(data)
             .enter()
@@ -228,6 +253,10 @@ function plotPieScatter(data) {
                 return `translate(${d.x}, ${d.y})`
             })
 
+        var totalText = toolTipDiv.append("text")
+            .attr("class", "toolText")
+            .attr("id", "toolTipText")
+
         var toolTipSvg = toolTipDiv.append("svg")
             .attr("id", "toolTipSvg")
             .attr("width", tooltipWidth)
@@ -236,12 +265,12 @@ function plotPieScatter(data) {
             .data(function (d) {
                 return pie(Object.entries(d.ExpenseData))
             })
-            .enter()
-            .append("path")
+            .join("path")
             .attr("class", "pieScatter")
             .attr("d", function (d) {
                 var radius = d3.select(this.parentNode).property("radius")
-                arc.outerRadius(pieRadiusFunct(radius))
+                // arc.outerRadius(pieRadiusFunct(radius))
+                arc.outerRadius(0)
                 return arc(d)
             })
             .attr("fill", function (d) {
@@ -252,7 +281,27 @@ function plotPieScatter(data) {
                 return colors(d.data[0])
             })
             .attr("stroke-width", 2)
+            .transition() // Add transition
+            .duration(1000) // Set the duration of the transition (in milliseconds)
+            .attrTween("d", function (d) {
+                var radius = d3.select(this.parentNode).property("radius");
+                var interpolate = d3.interpolate(0, pieRadiusFunct(radius));
+                return function (t) {
+                    arc.outerRadius(interpolate(t));
+                    return arc(d);
+                };
+            })
+        pies.selectAll(".pieScatter")
+            .data(function (d) {
+                return pie(Object.entries(d.ExpenseData))
+            })
             .on("mouseover", function (event, data) {
+                toolTipSvg.selectAll("*").remove()
+                totalText.text(`Total : ${data.value}`)
+                    .style("font-size", "14px")
+                    .style("font-weight", "bold")
+                    .style("color", "black")
+
                 var ind = d3.select(this.parentNode).property("index")
 
                 var ageExpenseDict = {}
@@ -277,7 +326,7 @@ function plotPieScatter(data) {
                 })
                 var xScale = d3.scaleBand()
                     .domain(xAxisLabels)
-                    .range([0, innerBarWidth])
+                    .range([0, innerBarWidth - 20])
                     .padding(0.1)
 
                 var xAxis = d3.axisBottom(xScale)
@@ -290,9 +339,9 @@ function plotPieScatter(data) {
                     .attr('transform', `translate(${50}, ${20})`)
                 toolTipSvg.append("text")
                     .attr("x", innerBarWidth / 2 + 20)  // Adjust the x-coordinate as needed
-                    .attr("y", 10)  // Adjust the y-coordinate as needed
+                    .attr("y", 15)  // Adjust the y-coordinate as needed
                     .attr("text-anchor", "middle")
-                    .style("font-size", "16px")
+                    .style("font-size", "12px")
                     .style("font-weight", "bold")
                     .text(txt)
 
@@ -315,7 +364,7 @@ function plotPieScatter(data) {
                     .attr("y", function (d) {
                         return yScale(d[1])
                     })
-                    .attr('width', xScale.bandwidth() - 10)
+                    .attr('width', xScale.bandwidth())
                     .attr('height', d => innerBarHeight - yScale(d[1]))
                     .attr("fill", function (d) {
                         return colorScale(d[0])
@@ -327,18 +376,17 @@ function plotPieScatter(data) {
                     .append("text")
                     .attr("class", "barText")
                     .text(function (d) {
-                        colorScale.log(d[1])
-                        return d[1]; // Use the data value as the text content
+                        return d[1];
                     })
                     .attr("x", function (d) {
                         return xScale(d[0]) + xScale.bandwidth() / 2;
                     })
                     .attr("y", function (d) {
-                        return yScale(d[1]) - 5; // Adjust the y-coordinate for text positioning
+                        return yScale(d[1]) + 30;
                     })
                     .attr("text-anchor", "middle")
                     .style("font-size", "12px")
-                    .style("fill", "white")
+                    .style("fill", "whitesmoke")
                 toolTipDiv.transition()
                     .duration(0)
                     .style("display", "block")
@@ -359,13 +407,56 @@ function plotPieScatter(data) {
             .on('mouseout', function (d) {
                 var tsvg = d3.select("#toolTipSvg")
                 tsvg.selectAll("*").remove()
-
+                totalText.text("")
                 toolTipDiv.transition()
                     .duration(300)
                     .style("display", "none")
             })
+
     })
 
 
 
+
+
+}
+
+function showPieLegends(width) {
+    var svg = d3.select("#vanshaj")
+    var lst = ["Shelter", "Education", "Food", "Recreation"]
+
+    var legendWidth = 20;
+    var legendPadding = 50;
+    var legendItemWidth = legendWidth + legendPadding;
+    var legendHeight = 20;
+
+    var legend = svg.append('g')
+        .attr('class', 'legend')
+        .attr('transform', `translate(10, 10)`);
+
+    var legendItems = legend.selectAll('.legend-item')
+        .data(lst)
+        .enter()
+        .append('g')
+        .attr('class', 'legend-item')
+        .attr('transform', function (d, i) {
+            return 'translate(' + (i * (legendItemWidth + 45)) + ', 0)';
+        });
+
+    legendItems.append('rect')
+        .attr('width', legendWidth)
+        .attr('height', legendHeight)
+        .attr('fill', function (d, i) {
+
+            return colors(d);
+        });
+
+    legendItems.append('text')
+        .attr('x', legendWidth + 10)
+        .attr('y', legendHeight / 2)
+        .attr('dy', '0.35em')
+        .attr('style', 'font: Georgia')
+        .text(function (d) {
+            return d;
+        });
 }
