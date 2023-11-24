@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     textarea.value += "\n \t * The rent increases when you move towards the center of the city";
     textarea.value += "\n \t * The number of rooms per occupant decreases when you move towards the center of the city";
     textarea.value += "\n \t * The size of the circles indicate the number of rooms occupied by each person";
-    textarea.value += "\n \t \t \t \t- Nishanthan Rengaharan";
+    textarea.value += "\n \t \t \t \t \t- Nishanthan Rengaharan";
+
     // Append an SVG element for the background image
     var backgroundSvg = nishanthanSvg.append("svg").attr("class", "map");
 
@@ -16,12 +17,21 @@ document.addEventListener("DOMContentLoaded", function () {
     var yScale = d3.scaleLinear().range([1137, 7]); // height of the plot
 
     var colorScale = d3.scaleLinear()
-        .range(["lightgreen", "darkred"]) // darker green to darker red // color range from green to red
-
+        .range(["lightgreen", "darkred"]); // darker green to darker red // color range from green to red
 
     // Load CSV data and overlay points on the image
     d3.csv("./data/nishanthan/Apartments.csv").then(function (data) {
-        // Convert string coordinates and rent to numbers
+        processData(data);
+        setupSimulation(data);
+        addRectangles(data, backgroundSvg, xScale, yScale, colorScale);
+        addLegend(nishanthanSvg, colorScale);
+        // updateChart('Low', data, backgroundSvg, xScale, yScale, colorScale);
+
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    function processData(data) {
         data.forEach(function (d) {
             var coordinates = d.location.replace('POINT (', '').replace(')', '').split(' ');
             d.x = +coordinates[0];
@@ -29,79 +39,59 @@ document.addEventListener("DOMContentLoaded", function () {
             d.rentalCost = +d.rentalCost;
             d.maxOccupancy = +d.maxOccupancy;
             d.numberOfRooms = +d.numberOfRooms;
+            d.apartmentId = +d.apartmentId;
         });
 
         // Update the scales based on the data range
         xScale.domain(d3.extent(data, function (d) { return d.x; }));
         yScale.domain(d3.extent(data, function (d) { return d.y; }));
         colorScale.domain([d3.min(data, function (d) { return d.rentalCost; }) + 400, d3.max(data, function (d) { return d.rentalCost; })]);
-        // colorScale.domain(d3.extent(data, function (d) { return d.rentalCost; }));
+    }
 
+    function setupSimulation(data) {
         var simulation = d3.forceSimulation(data)
             .force("x", d3.forceX(function (d) { return xScale(d.x); }).strength(0.1))
             .force("y", d3.forceY(function (d) { return yScale(d.y); }).strength(0.1))
             .force("collide", d3.forceCollide(function (d) { return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7; }).iterations(2).strength(0.4))
-            .stop(); // Stop the simulation initially to adjust the circles based on the forces
+            .stop();
 
-        // Run the simulation for a few iterations to adjust the circle positions
         for (var i = 0; i < 200; ++i) simulation.tick();
+    }
 
-        // Add circles for each point on the background SVG
-        // backgroundSvg.selectAll("circle")
-        //     .data(data)
-        //     .enter().append("circle")
-        //     .attr("class", "point")
-        //     .attr("cx", function (d) {
-        //         return d.x;
-
-        //     })
-        //     .attr("cy", function (d) {
-        //         return d.y;
-        //     })
-        //     .attr("r", function (d) {
-        //         // Adjust the radius based on the ratio of number of rooms to maxOccupancy
-        //         return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // You can adjust the multiplier for a better visual effect
-        //     })
-        //     .attr("fill", function (d) {
-        //         return colorScale(d.rentalCost);
-        //     })
-        //     .attr("stroke", "black") // Add black stroke
-        //     .attr("stroke-width", 1);
-
-        // Add squares for each point on the background SVG
-        backgroundSvg.selectAll("rect")
+    function addRectangles(data, svg, xScale, yScale, colorScale) {
+        svg.selectAll("rect")
             .data(data)
             .enter().append("rect")
             .attr("class", "point")
             .attr("x", function (d) {
-                return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // Adjust for the square's width
+                return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
             })
             .attr("y", function (d) {
-                return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5; // Adjust for the square's height
+                return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
             })
             .attr("width", function (d) {
-                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10; // Adjust for the square's width
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
             })
             .attr("height", function (d) {
-                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10; // Adjust for the square's height
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
             })
             .attr("fill", function (d) {
                 return colorScale(d.rentalCost);
             })
-            .attr("stroke", "black") // Add black stroke
+            .attr("stroke", "black")
             .attr("stroke-width", 1);
+    }
 
-        // Add legend
-        var legend = nishanthanSvg.append("g")
+    function addLegend(svg, colorScale) {
+        var legend = svg.append("g")
             .attr("class", "legend")
-            .attr("transform", "translate(950,50)"); // Adjust the position of the legend
+            .attr("transform", "translate(950,50)");
 
         var legendRectSize = 18;
         var legendSpacing = 12;
 
         var legendData = ["Low Rent", "High Rent"];
 
-        // Create a color scale legend
         var legendGradient = legend.append("defs")
             .append("linearGradient")
             .attr("id", "rentLegend")
@@ -124,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("fill", "url(#rentLegend)")
             .attr("transform", "translate(0," + (legendRectSize * 2) + ")");
 
-        // Add text labels for the legend
         var legendText = legend.selectAll(".legendText")
             .data(colorScale.domain())
             .enter().append("text")
@@ -133,9 +122,90 @@ document.addEventListener("DOMContentLoaded", function () {
             .attr("y", function (d, i) { return (1 - i) * (legendRectSize + legendSpacing * 4) + legendRectSize * 2.65; })
             .attr("dy", "0.35em")
             .text(function (d) { return Math.round(d < 1000 ? d - 400 : d); });
+    }
 
-
-    }).catch(function (error) {
-        console.log(error);
-    });
+    function updateChart(educationLevel, data, svg, xScale, yScale, colorScale) {
+        // Valid education levels
+        var validEducationLevels = ['HighSchoolOrCollege', 'Bachelors', 'Graduate', 'Low'];
+    
+        // Check if the provided education level is valid
+        if (validEducationLevels.includes(educationLevel)) {
+            // Load the combined data CSV file
+            d3.csv('./data/nishanthan/combined_data.csv').then(function (combinedData) {
+                // Filter data based on the provided education level
+                var filteredData = combinedData.filter(function (d) {
+                    return d.educationLevel === educationLevel;
+                });
+    
+                // Extract apartmentIds from the filtered data
+                var apartmentIds = filteredData.map(function (d) {
+                    return +d.apartmentId;
+                });
+    
+                // Filter Apartments.csv data based on the extracted apartmentIds
+                var filteredApartments = data.filter(function (apartment) {
+                    return apartmentIds.includes(apartment.apartmentId);
+                });
+    
+                // Remove existing rectangles
+                svg.selectAll("rect").remove();
+    
+                // Add rectangles for each point on the background SVG
+                svg.selectAll("rect")
+                    .data(filteredApartments)
+                    .enter().append("rect")
+                    .attr("class", "point")
+                    .attr("x", function (d) {
+                        return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                    })
+                    .attr("y", function (d) {
+                        return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                    })
+                    .attr("width", function (d) {
+                        return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                    })
+                    .attr("height", function (d) {
+                        return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                    })
+                    .attr("fill", function (d) {
+                        return colorScale(d.rentalCost);
+                    })
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 1);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        } else {
+            // If education level is not valid, plot rectangles for all data
+            // Remove existing rectangles
+            svg.selectAll("rect").remove();
+    
+            // Add rectangles for each point on the background SVG
+            svg.selectAll("rect")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "point")
+                .attr("x", function (d) {
+                    return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                })
+                .attr("y", function (d) {
+                    return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                })
+                .attr("width", function (d) {
+                    return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                })
+                .attr("height", function (d) {
+                    return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                })
+                .attr("fill", function (d) {
+                    return colorScale(d.rentalCost);
+                })
+                .attr("stroke", "black")
+                .attr("stroke-width", 1);
+        }
+    }
+    
+    
+    
+    
 });
