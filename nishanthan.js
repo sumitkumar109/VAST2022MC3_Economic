@@ -1,3 +1,10 @@
+var colorScale;
+var backgroundSvg;
+var educationLevel = "Bachelors";
+var validEducationLevels = ['HighSchoolOrCollege', 'Bachelors', 'Graduate', 'Low'];
+var adata;
+
+
 document.addEventListener("DOMContentLoaded", function () {
     var nishanthanSvg = d3.select("#nishanthan");
     var textarea = document.getElementById("nishanthan_description");
@@ -6,17 +13,17 @@ document.addEventListener("DOMContentLoaded", function () {
     textarea.value += "\n \t * This graph also visualizes the high rental and low rental areas";
     textarea.value += "\n \t * The rent increases when you move towards the center of the city";
     textarea.value += "\n \t * The number of rooms per occupant decreases when you move towards the center of the city";
-    textarea.value += "\n \t * The size of the circles indicate the number of rooms occupied by each person";
+    textarea.value += "\n \t * The size of the squares indicate the number of rooms occupied by each person";
     textarea.value += "\n \t \t \t \t \t- Nishanthan Rengaharan";
 
     // Append an SVG element for the background image
-    var backgroundSvg = nishanthanSvg.append("svg").attr("class", "map");
+    backgroundSvg = nishanthanSvg.append("svg").attr("class", "map");
 
     // Set up scales for x, y axes, and color
     var xScale = d3.scaleLinear().range([20, 1053]); // width of the plot
     var yScale = d3.scaleLinear().range([1137, 7]); // height of the plot
 
-    var colorScale = d3.scaleLinear()
+    colorScale = d3.scaleLinear()
         .range(["lightgreen", "darkred"]); // darker green to darker red // color range from green to red
 
     // Load CSV data and overlay points on the image
@@ -25,7 +32,12 @@ document.addEventListener("DOMContentLoaded", function () {
         setupSimulation(data);
         addRectangles(data, backgroundSvg, xScale, yScale, colorScale);
         addLegend(nishanthanSvg, colorScale);
-        // updateChart('Low', data, backgroundSvg, xScale, yScale, colorScale);
+        adata = data;
+
+        // Check if the provided education level is valid
+        if (validEducationLevels.includes(educationLevel)) {
+            updateChart(educationLevel);
+        }
 
     }).catch(function (error) {
         console.log(error);
@@ -124,10 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .text(function (d) { return Math.round(d < 1000 ? d - 400 : d); });
     }
 
-    function updateChart(educationLevel, data, svg, xScale, yScale, colorScale) {
+    function updateChart(educationLevel) {
         // Valid education levels
-        var validEducationLevels = ['HighSchoolOrCollege', 'Bachelors', 'Graduate', 'Low'];
-    
+
         // Check if the provided education level is valid
         if (validEducationLevels.includes(educationLevel)) {
             // Load the combined data CSV file
@@ -136,22 +147,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 var filteredData = combinedData.filter(function (d) {
                     return d.educationLevel === educationLevel;
                 });
-    
+
                 // Extract apartmentIds from the filtered data
                 var apartmentIds = filteredData.map(function (d) {
                     return +d.apartmentId;
                 });
-    
+
                 // Filter Apartments.csv data based on the extracted apartmentIds
-                var filteredApartments = data.filter(function (apartment) {
+                var filteredApartments = adata.filter(function (apartment) {
                     return apartmentIds.includes(apartment.apartmentId);
                 });
-    
+
                 // Remove existing rectangles
-                svg.selectAll("rect").remove();
-    
+                backgroundSvg.selectAll("rect").remove();
+
                 // Add rectangles for each point on the background SVG
-                svg.selectAll("rect")
+                backgroundSvg.selectAll("rect")
                     .data(filteredApartments)
                     .enter().append("rect")
                     .attr("class", "point")
@@ -178,11 +189,11 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             // If education level is not valid, plot rectangles for all data
             // Remove existing rectangles
-            svg.selectAll("rect").remove();
-    
+            backgroundSvg.selectAll("rect").remove();
+
             // Add rectangles for each point on the background SVG
-            svg.selectAll("rect")
-                .data(data)
+            backgroundSvg.selectAll("rect")
+                .data(adata)
                 .enter().append("rect")
                 .attr("class", "point")
                 .attr("x", function (d) {
@@ -204,8 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 .attr("stroke-width", 1);
         }
     }
-    
-    
-    
-    
+
+
+
+
 });
