@@ -89,3 +89,14 @@ h1 {
     font: Georgia;
 
 }
+
+.utkarsh-tooltip{
+    position: absolute; 
+    display: none; 
+    background-color: white; 
+    border-radius: 10px;
+    border-width: 2px;
+    padding: 10px; 
+    border: solid black;
+    opacity: .95;
+}

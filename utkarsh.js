@@ -164,7 +164,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         .attr("height", 0) 
                         .attr("fill", "purple")
                         .on("mouseover", (event,d) =>{
-                            let tooltip = d3.select('.utkarsh-tooltip')
                             tooltip.style('display', 'block')
                             .style('left', `${event.pageX + 10}px`)
                             .style('top', `${event.pageY - 30}px`)
@@ -185,11 +184,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             .attr("height", 0) 
                             .attr("fill", "orange")
                             .on("mouseover", (event,d) =>{
-                                let tooltip = d3.select('.utkarsh-tooltip')
                                 tooltip.style('display', 'block')
                                 .style('left', `${event.pageX + 10}px`)
                                 .style('top', `${event.pageY - 30}px`)
                                 .html(`<strong>Education Category:</strong> ${d.category}<br><strong>Total Income:</strong> $${d.value.toFixed(2)}<br><strong>Period:</strong> End of Study`)
+                            })
+                            .on("mouseout", function () {
+                                tooltip.style("display", "none");
                             })
                             .transition() 
                             .duration(1000) 
@@ -246,6 +247,9 @@ export function updateBarGraph(selectedEducationLevel) {
         .attr("opacity", d => (d.category === selectedEducationLevel) ? 1 : 0.3);
     }
 }
+
+const tooltip = d3.select("body").append("div")
+                .attr("class", "utkarsh-tooltip");
 
 
 
