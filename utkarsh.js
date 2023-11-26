@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         .attr("y", chartHeight + margin.top) 
                         .attr("width", bandwidth)
                         .attr("height", 0) 
-                        .attr("fill", "purple")
+                        .attr("fill", d3.schemeTableau10[0])
                         .on("mouseover", (event,d) =>{
                             tooltip.style('display', 'block')
                             .style('left', `${event.pageX + 10}px`)
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             .attr("y", chartHeight + margin.top) 
                             .attr("width", bandwidth)
                             .attr("height", 0) 
-                            .attr("fill", "orange")
+                            .attr("fill", d3.schemeTableau10[1])
                             .on("mouseover", (event,d) =>{
                                 tooltip.style('display', 'block')
                                 .style('left', `${event.pageX + 10}px`)
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 .attr("cx", 0)
                                 .attr("cy", 0)
                                 .attr("r", legendRadius)
-                                .attr("fill", "purple");
+                                .attr("fill", d3.schemeTableau10[0]);
 
                             legend.append("text")
                                 .attr("x", legendRadius + 5)
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 .attr("cx", 0)
                                 .attr("cy", legendSpacing)
                                 .attr("r", legendRadius)
-                                .attr("fill", "orange");
+                                .attr("fill", d3.schemeTableau10[1]);
 
                             legend.append("text")
                                 .attr("x", legendRadius + 5)

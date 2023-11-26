@@ -24,7 +24,7 @@ var adata;
     var yScale = d3.scaleLinear().range([1137, 7]); // height of the plot
 
     colorScale = d3.scaleLinear()
-        .range(["lightgreen", "darkred"]); // darker green to darker red // color range from green to red
+        .range(d3.schemeTableau10); // darker green to darker red // color range from green to red
 
     // Load CSV data and overlay points on the image
     d3.csv("./data/nishanthan/Apartments.csv").then(function (data) {

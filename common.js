@@ -2,6 +2,8 @@ import { updateLineChart } from "./sumit.js";
 import { updateGraph } from "./vanshaj.js";
 import { updateMapChart } from "./nishanthan.js";
 import { updateBarGraph } from "./utkarsh.js";
+import { updateRadarChart } from "./dhwanil.js";
+import { updatevisual } from "./ram.js";
 
 var textarea = document.getElementById("sumit2_description");
 textarea.value = "Sumit 2";
@@ -42,7 +44,7 @@ fetch('data_preprocessing/participant_education.json')
 
 function generateDonutChart(data) {
     console.log(data);
-    const colorScale = d3.scaleOrdinal(d3.schemeSet3);
+    const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
     const width = 570;
     const height = 380;
@@ -91,6 +93,8 @@ function generateDonutChart(data) {
             updateGraph(d.data.type);
             updateMapChart(d.data.type);
             updateBarGraph(d.data.type);
+            updateRadarChart(d.data.type, false);
+            updatevisual(d.data.type);
         });
 
     countGroup.append("text")

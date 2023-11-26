@@ -211,7 +211,7 @@ function plotPieScatter(data) {
 
 
     // colors = d3.scaleOrdinal().domain(["Saving", "Shelter", "Education", "Food", "Recreation"]).range(colorCodes)
-    colors = d3.scaleOrdinal().domain(["Shelter", "Education", "Food", "Recreation"]).range(colorCodes)
+    colors = d3.scaleOrdinal().domain(["Shelter", "Education", "Food", "Recreation"]).range(d3.schemeTableau10)
 
 
 

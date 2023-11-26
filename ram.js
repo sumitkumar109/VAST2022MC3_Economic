@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const stackedData = stack(summarizedData);
     console.log(stackedData)
   // Define color scale
-  const color = d3.scaleOrdinal(d3.schemeCategory10);
+  const color = d3.scaleOrdinal(d3.schemeTableau10);
 
   // Define x and y scales
   const xScale = d3.scaleTime()
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function() {
  });
 } 
 
-function updatevisual(education_level)
+export function updatevisual(education_level = "")
 {
   d3.select("#ram").select("svg").remove();
   //d3.select("#ram").remove();
@@ -185,7 +185,7 @@ function updatevisual(education_level)
       'Total_Wage': +d['Total_Wage'],
       'Total_expense': +d['Total_expense'],
       'educationLevel': d['educationLevel']
-    })).filter(d => d.educationLevel === education_level);
+    })).filter(d => education_level === "" || d.educationLevel === education_level);
 
     const groupedData = d3.rollup(
     filteredData,
@@ -323,4 +323,4 @@ function updatevisual(education_level)
 }
 normalChart();
 //const education_level = 'Low'
-updatevisual(education_level);
+updatevisual();

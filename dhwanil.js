@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", function() {
+
+    var textarea = document.getElementById("dhwanil_description");
+    textarea.value = "dhwanil";
     var educationData = {
         'Low': {"Jobs": 119, "Participants": 84, "JobChange": 267},
         'HighSchoolOrCollege': {"Jobs": 705, "Participants": 525, "JobChange": 2005},
@@ -7,13 +9,18 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     var educationLevelColors = {
-        'Low': '#1e90ff',
-        'HighSchoolOrCollege': '#ff7f50',
-        'Bachelors': '#32cd32',
-        'Graduate': '#da70d6'
+        'Low': d3.schemeTableau10[0],
+        'HighSchoolOrCollege': d3.schemeTableau10[1],
+        'Bachelors': d3.schemeTableau10[2],
+        'Graduate': d3.schemeTableau10[3]
     };
 
-    function updateChart(educationLevel) {
+    export function updateRadarChart(educationLevel, initialUpdate = true) {
+        if(!initialUpdate) {
+            var svg = d3.select("#dhwanil");
+            svg.selectAll("*").remove();
+        }
+
         if (educationData.hasOwnProperty(educationLevel)) {
             drawRadarChart(educationData[educationLevel], educationLevelColors[educationLevel]);
         } else {
@@ -21,15 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    document.querySelectorAll('input[name="educationLevel"]').forEach(function(elem) {
-        elem.addEventListener('change', function(event) {
-            var currentLevel = event.target.value;
-            updateChart(currentLevel);
-        });
-    });
-
-
-});
+    updateRadarChart("Low");
+    updateRadarChart("HighSchoolOrCollege");
+    updateRadarChart("Bachelors");
+    updateRadarChart("Graduate");
 
 function drawRadarChart(data, color) {
     var formattedData = [
@@ -60,10 +62,9 @@ function drawRadarChart(data, color) {
         total = allAxis.length,
         radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
 
-    var g = d3.select("#chart").select("svg").remove();
+    //var g = d3.select("#chart").select("svg").remove();
 
-    g = d3.select("#chart")
-        .append("svg")
+    var g = d3.select("#dhwanil")
         .attr("width", cfg.w + cfg.ExtraWidthX)
         .attr("height", cfg.h + cfg.ExtraWidthY)
         .append("g")
