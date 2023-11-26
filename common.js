@@ -1,4 +1,7 @@
-import { updateChartSumit } from "./sumit.js";
+import { updateLineChart } from "./sumit.js";
+import { updateGraph } from "./vanshaj.js";
+import { updateMapChart } from "./nishanthan.js";
+import { updateBarGraph } from "./utkarsh.js";
 
 var textarea = document.getElementById("sumit2_description");
 textarea.value = "Sumit 2";
@@ -84,7 +87,10 @@ function generateDonutChart(data) {
                 .text("");
         })
         .on("click", function (event, d) {
-            updateChartSumit(d.data.type);
+            updateLineChart(d.data.type);
+            updateGraph(d.data.type);
+            updateMapChart(d.data.type);
+            updateBarGraph(d.data.type);
         });
 
     countGroup.append("text")

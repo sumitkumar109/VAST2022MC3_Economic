@@ -1,11 +1,11 @@
 var colorScale;
 var backgroundSvg;
-var educationLevel = "Bachelors";
+var educationLevel = "";
 var validEducationLevels = ['HighSchoolOrCollege', 'Bachelors', 'Graduate', 'Low'];
 var adata;
 
 
-document.addEventListener("DOMContentLoaded", function () {
+
     var nishanthanSvg = d3.select("#nishanthan");
     var textarea = document.getElementById("nishanthan_description");
     textarea.value = "This map of the city's blocks and apartment complexes describes the Ohio city's rental information.";
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if the provided education level is valid
         if (validEducationLevels.includes(educationLevel)) {
-            updateChart(educationLevel);
+            updateMapChart(educationLevel);
         }
 
     }).catch(function (error) {
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .text(function (d) { return Math.round(d < 1000 ? d - 400 : d); });
     }
 
-    function updateChart(educationLevel) {
+    export function updateMapChart(educationLevel) {
         // Valid education levels
 
         // Check if the provided education level is valid
@@ -219,4 +219,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-});
+

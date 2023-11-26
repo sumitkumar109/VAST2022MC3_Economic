@@ -1,11 +1,11 @@
 var startObject = {};
 var endObject = {};
 var svg;
-height = 325;
-width = 500;
-margin = {top : 30, right : 30, bottom : 30, left : 90};
-chartHeight = height - margin.top - margin.bottom;
-chartWidth = width - margin.left - margin.right;
+var height = 325;
+var width = 500;
+var margin = {top : 30, right : 30, bottom : 30, left : 90};
+var chartHeight = height - margin.top - margin.bottom;
+var chartWidth = width - margin.left - margin.right;
 
 document.addEventListener("DOMContentLoaded", function() { 
 
@@ -227,18 +227,19 @@ document.addEventListener("DOMContentLoaded", function() {
                                 .attr("dy", "0.35em")
                                 .text("End of Study");
 
-                                updateGraph(selectedEducationLevel)
+                                updateBarGraph(selectedEducationLevel)
 
           });
 
-
+          var changeEvent = new Event("change");
+        ageDropdown.dispatchEvent(changeEvent);
 
     })
 
 
 });
 
-function updateGraph(selectedEducationLevel) {
+export function updateBarGraph(selectedEducationLevel) {
 
     if(selectedEducationLevel){
         svg.selectAll(".startBars, .endBars")

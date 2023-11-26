@@ -152,7 +152,7 @@ function plotInnovativeChart(data, educationLevel = "ALL") {
 
 }
 
-function updateGraph(educationLevel) {
+export function updateGraph(educationLevel) {
     console.log("update graph called......")
     plotInnovativeChart(globalExpenseDataset, educationLevel)
 }

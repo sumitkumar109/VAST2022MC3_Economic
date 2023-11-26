@@ -14,7 +14,7 @@ const svg = d3
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
-export function updateChartSumit(educationLevel = "") {
+export function updateLineChart(educationLevel = "") {
   svg.selectAll("*").remove();
 
   let filename = "modified_financial_journal.csv";
@@ -175,4 +175,4 @@ export function updateChartSumit(educationLevel = "") {
   });
 }
 
-updateChartSumit();
+updateLineChart();
