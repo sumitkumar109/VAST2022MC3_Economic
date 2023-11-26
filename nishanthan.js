@@ -126,6 +126,7 @@ var adata;
             .style("fill", "url(#rentLegend)")
             .attr("transform", "translate(0," + (legendRectSize * 2) + ")");
 
+
         var legendText = legend.selectAll(".legendText")
             .data(colorScale.domain())
             .enter().append("text")
@@ -134,6 +135,12 @@ var adata;
             .attr("y", function (d, i) { return (1 - i) * (legendRectSize + legendSpacing * 4) + legendRectSize * 2.65; })
             .attr("dy", "0.35em")
             .text(function (d) { return Math.round(d < 1000 ? d - 400 : d); });
+
+            legend.append("text").attr("class", "legendText")
+            .attr("x", legendRectSize + legendSpacing * 2 - 35)
+            .attr("y", function (d, i) { return (1 - i) * (legendRectSize + legendSpacing * 4) + legendRectSize *-4; })
+            .attr("dy", "0.35em")
+            .text("Rent in $");
     }
 
     export function updateMapChart(educationLevel) {
