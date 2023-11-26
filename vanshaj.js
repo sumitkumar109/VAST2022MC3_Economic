@@ -175,9 +175,14 @@ function plotPieScatter(data) {
 
     var xAxis = d3.axisBottom(xScale)
 
+    g.append("text")
+    .attr("transform", `translate(${chartWidth / 2},${chartHeight+20})`)
+    .style("text-anchor", "middle")
+    .text("Month Number")
+
 
     g.append('g').call(xAxis)
-        .attr('transform', `translate(0,${chartHeight})`)
+        .attr('transform', `translate(0,${chartHeight-10})`)
 
     var toolTipDiv = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -443,9 +448,12 @@ function showPieLegends(width) {
             return 'translate(' + (i * (legendItemWidth + 45)) + ', 0)';
         });
 
-    legendItems.append('rect')
-        .attr('width', legendWidth)
-        .attr('height', legendHeight)
+    legendItems.append('circle')
+        // .attr('width', legendWidth)
+        // .attr('height', legendHeight)
+        // .attr("cx", 0)
+        .attr("cy", 10)
+        .attr('r',8)
         .attr('fill', function (d, i) {
 
             return colors(d);
