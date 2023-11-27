@@ -49,8 +49,8 @@ function drawRadarChart(data, color) {
         maxValue: 0,
         radians: 2 * Math.PI,
         opacityArea: 0.5,
-        TranslateX: 80,
-        TranslateY: 30,
+        TranslateX: 40,
+        TranslateY: 20,
         ExtraWidthX: 100,
         ExtraWidthY: 100,
         color: color
