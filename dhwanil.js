@@ -24,7 +24,11 @@ export function updateRadarChart(educationLevel, initialUpdate = true) {
     if (educationData.hasOwnProperty(educationLevel)) {
         drawRadarChart(educationData[educationLevel], educationLevelColors[educationLevel]);
     } else {
-        console.error("Invalid education level provided to updateChart:", educationLevel);
+        // console.error("Invalid education level provided to updateChart:", educationLevel);
+        updateRadarChart("Low");
+        updateRadarChart("HighSchoolOrCollege");
+        updateRadarChart("Bachelors");
+        updateRadarChart("Graduate");
     }
 }
 
@@ -74,7 +78,7 @@ function drawRadarChart(data, color) {
     g.append("text")
         .attr("class", "allText")
         .attr("x", cfg.w / 2)
-        .attr("y", -40) 
+        .attr("y", -40)
         .attr("text-anchor", "middle")
 
         .text("Job Market Readiness Radar");
