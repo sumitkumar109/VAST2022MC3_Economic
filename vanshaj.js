@@ -175,11 +175,11 @@ function plotPieScatter(data) {
     chartWidth = width - margin.left - margin.right
 
     const g = svg.append("g")
-        .attr('transform', `translate(${margin.left + 15}, ${margin.top})`)
+        .attr('transform', `translate(${margin.left + 35}, ${margin.top})`)
 
     var xScale = d3.scaleLinear()
         .domain([0, 15])
-        .range([0, chartWidth - 60])
+        .range([0, chartWidth - 100])
 
     var xAxis = d3.axisBottom(xScale)
 
@@ -230,7 +230,7 @@ function plotPieScatter(data) {
 
 
 
-    var pieRadiusFunct = d3.scaleSqrt().domain(d3.extent(data.map((d) => d.Saving))).range([30, 60])
+    var pieRadiusFunct = d3.scaleSqrt().domain(d3.extent(data.map((d) => d.Saving))).range([40, 80])
 
 
     var simulation = d3.forceSimulation(data)
