@@ -1,44 +1,45 @@
 
-    var textarea = document.getElementById("dhwanil_description");
-    textarea.value = "dhwanil";
-    var educationData = {
-        'Low': {"Jobs": 119, "Participants": 84, "JobChange": 267},
-        'HighSchoolOrCollege': {"Jobs": 705, "Participants": 525, "JobChange": 2005},
-        'Bachelors': {"Jobs": 330, "Participants": 232, "JobChange": 91},
-        'Graduate': {"Jobs": 174, "Participants": 170, "JobChange": 4}
-    };
+// var textarea = document.getElementById("dhwanil_description");
+// textarea.value = "dhwanil";
+var educationData = {
+    'Low': { "Jobs": 119, "Participants": 84, "JobChange": 267 },
+    'HighSchoolOrCollege': { "Jobs": 705, "Participants": 525, "JobChange": 2005 },
+    'Bachelors': { "Jobs": 330, "Participants": 232, "JobChange": 91 },
+    'Graduate': { "Jobs": 174, "Participants": 170, "JobChange": 4 }
+};
 
-    var educationLevelColors = {
-        'Low': d3.schemeTableau10[0],
-        'HighSchoolOrCollege': d3.schemeTableau10[1],
-        'Bachelors': d3.schemeTableau10[2],
-        'Graduate': d3.schemeTableau10[3]
-    };
+var educationLevelColors = {
+    'Low': d3.schemeTableau10[0],
+    'HighSchoolOrCollege': d3.schemeTableau10[1],
+    'Bachelors': d3.schemeTableau10[2],
+    'Graduate': d3.schemeTableau10[3]
+};
 
-    export function updateRadarChart(educationLevel, initialUpdate = true) {
-        if(!initialUpdate) {
-            var svg = d3.select("#dhwanil");
-            svg.selectAll("*").remove();
-        }
-
-        if (educationData.hasOwnProperty(educationLevel)) {
-            drawRadarChart(educationData[educationLevel], educationLevelColors[educationLevel]);
-        } else {
-            console.error("Invalid education level provided to updateChart:", educationLevel);
-        }
+export function updateRadarChart(educationLevel, initialUpdate = true) {
+    if (!initialUpdate) {
+        var svg = d3.select("#dhwanil");
+        svg.selectAll("*").remove();
     }
 
-    updateRadarChart("Low");
-    updateRadarChart("HighSchoolOrCollege");
-    updateRadarChart("Bachelors");
-    updateRadarChart("Graduate");
+    if (educationData.hasOwnProperty(educationLevel)) {
+        drawRadarChart(educationData[educationLevel], educationLevelColors[educationLevel]);
+    } else {
+        console.error("Invalid education level provided to updateChart:", educationLevel);
+    }
+}
+
+updateRadarChart("Low");
+updateRadarChart("HighSchoolOrCollege");
+updateRadarChart("Bachelors");
+updateRadarChart("Graduate");
 
 function drawRadarChart(data, color) {
     var formattedData = [
-        {axis: "Jobs", value: data.Jobs},
-        {axis: "Participants", value: data.Participants},
-        {axis: "JobChange", value: data.JobChange}
+        { axis: "Jobs", value: data.Jobs },
+        { axis: "Participants", value: data.Participants },
+        { axis: "JobChange", value: data.JobChange }
     ];
+
 
     var cfg = {
         w: 600,
@@ -49,8 +50,8 @@ function drawRadarChart(data, color) {
         maxValue: 0,
         radians: 2 * Math.PI,
         opacityArea: 0.5,
-        TranslateX: 40,
-        TranslateY: 20,
+        TranslateX: 45,
+        TranslateY: 120,
         ExtraWidthX: 100,
         ExtraWidthY: 100,
         color: color
@@ -70,7 +71,7 @@ function drawRadarChart(data, color) {
         .append("g")
         .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
 
-    for(var j = 0; j < cfg.levels; j++) {
+    for (var j = 0; j < cfg.levels; j++) {
         var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);
         g.selectAll(".levels")
             .data(allAxis)

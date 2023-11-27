@@ -22,8 +22,8 @@ var colorScale = d3.scaleOrdinal()
 
 document.addEventListener("DOMContentLoaded", function () {
     var svg = d3.select("#vanshaj");
-    var textarea = document.getElementById("vanshaj_description");
-    textarea.value = "vanshaj";
+    // var textarea = document.getElementById("vanshaj_description");
+    // textarea.value = "vanshaj";
 
     Promise.all([d3.csv('datasets/ExpenseDataset.csv')])
         .then(function (data) {
@@ -164,10 +164,10 @@ function plotPieScatter(data) {
     width = +svg.style("width").replace("px", '');
     var margin = { top: 10, bottom: 30, left: 35, right: 20 }
     chartHeight = height - margin.top - margin.bottom
-    chartWidth = width - margin.left - margin.right - 400
+    chartWidth = width - margin.left - margin.right
 
     const g = svg.append("g")
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('transform', `translate(${margin.left + 10}, ${margin.top})`)
 
     var xScale = d3.scaleLinear()
         .domain([0, 15])
@@ -176,13 +176,13 @@ function plotPieScatter(data) {
     var xAxis = d3.axisBottom(xScale)
 
     g.append("text")
-    .attr("transform", `translate(${chartWidth / 2},${chartHeight+20})`)
-    .style("text-anchor", "middle")
-    .text("Month Number")
+        .attr("transform", `translate(${chartWidth / 2},${chartHeight + 20})`)
+        .style("text-anchor", "middle")
+        .text("Month Number")
 
 
     g.append('g').call(xAxis)
-        .attr('transform', `translate(0,${chartHeight-10})`)
+        .attr('transform', `translate(0,${chartHeight - 10})`)
 
     var toolTipDiv = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -437,7 +437,7 @@ function showPieLegends(width) {
 
     var legend = svg.append('g')
         .attr('class', 'legend')
-        .attr('transform', `translate(10, 10)`);
+        .attr('transform', `translate(20, 10)`);
 
     var legendItems = legend.selectAll('.legend-item')
         .data(lst)
@@ -453,7 +453,7 @@ function showPieLegends(width) {
         // .attr('height', legendHeight)
         // .attr("cx", 0)
         .attr("cy", 10)
-        .attr('r',8)
+        .attr('r', 8)
         .attr('fill', function (d, i) {
 
             return colors(d);

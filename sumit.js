@@ -1,5 +1,5 @@
-var textarea = document.getElementById("sumit1_description");
-textarea.value = "Sumit 1";
+// var textarea = document.getElementById("sumit1_description");
+// textarea.value = "Sumit 1";
 
 // Set dimensions and margins for the graph
 var margin = { top: 20, right: 20, bottom: 20, left: 75 };

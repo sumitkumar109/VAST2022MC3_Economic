@@ -1,7 +1,7 @@
-body {
+/* body {
     background: linear-gradient(45deg, #f3f4f6, #ffffff);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+} */
 
 .myContainer {
     margin: 40px auto;
@@ -90,13 +90,13 @@ h1 {
 
 }
 
-.utkarsh-tooltip{
-    position: absolute; 
-    display: none; 
-    background-color: white; 
+.utkarsh-tooltip {
+    position: absolute;
+    display: none;
+    background-color: white;
     border-radius: 10px;
     border-width: 2px;
-    padding: 10px; 
+    padding: 10px;
     border: solid black;
     opacity: .95;
 }
@@ -118,13 +118,16 @@ h1 {
     fill-opacity: 0.7;
 }
 
-.axis line, .levels line {
+.axis line,
+.levels line {
     stroke: black;
     stroke-opacity: 0.75;
     stroke-width: 2px;
 }
 
-.axis text, .radarChartValue, .levelValue {
+.axis text,
+.radarChartValue,
+.levelValue {
     font-family: 'Georgia', serif;
     fill: #444;
 }
@@ -135,4 +138,67 @@ h1 {
 
 .levelValue {
     font-size: 10px;
+}
+
+.ProjectHeading {
+    text-align: center;
+    color: black;
+    font-family: 'Georgia';
+    margin-top: 150px;
+    font: 80;
+}
+
+/* new css */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainDiv {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#leftDiv {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1px;
+    /* Adjust the gap as needed */
+}
+
+.leftCell {
+    border: 1px solid #000;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rightDiv {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#rightTopDiv {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#rightTopTopDiv,
+#rightTopBottomDiv,
+#rightBottomDiv {
+    flex: 1;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

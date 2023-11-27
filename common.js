@@ -5,41 +5,41 @@ import { updateBarGraph } from "./utkarsh.js";
 import { updateRadarChart } from "./dhwanil.js";
 import { updatevisual } from "./ram.js";
 
-var textarea = document.getElementById("sumit2_description");
-textarea.value = "Sumit 2";
+// var textarea = document.getElementById("sumit2_description");
+// textarea.value = "Sumit 2";
 
 // Load the JSON file using fetch
 fetch('data_preprocessing/participant_education.json')
-.then((response) => response.json())
-.then((data) => {
-    // Initialize counters for different education levels
-    let lowCount = 0;
-    let highSchoolCount = 0;
-    let bachelorsCount = 0;
-    let graduateCount = 0;
+    .then((response) => response.json())
+    .then((data) => {
+        // Initialize counters for different education levels
+        let lowCount = 0;
+        let highSchoolCount = 0;
+        let bachelorsCount = 0;
+        let graduateCount = 0;
 
-    // Iterate through the objects in the JSON data
-    data.forEach((participant) => {
-        const educationLevel = participant.educationLevel;
-        if (educationLevel === 'Low') {
-            lowCount++;
-        } else if (educationLevel === 'HighSchoolOrCollege') {
-            highSchoolCount++;
-        } else if (educationLevel === 'Bachelors') {
-            bachelorsCount++;
-        } else if (educationLevel === 'Graduate') {
-            graduateCount++;
-        }
-    });
+        // Iterate through the objects in the JSON data
+        data.forEach((participant) => {
+            const educationLevel = participant.educationLevel;
+            if (educationLevel === 'Low') {
+                lowCount++;
+            } else if (educationLevel === 'HighSchoolOrCollege') {
+                highSchoolCount++;
+            } else if (educationLevel === 'Bachelors') {
+                bachelorsCount++;
+            } else if (educationLevel === 'Graduate') {
+                graduateCount++;
+            }
+        });
 
-    generateDonutChart([
-        {type: 'Low', count: lowCount},
-        {type: 'HighSchoolOrCollege', count: highSchoolCount},
-        {type: 'Bachelors', count: bachelorsCount},
-        {type: 'Graduate', count: graduateCount}
-    ])
-})
-.catch((error) => console.error('Error loading the JSON file:', error));
+        generateDonutChart([
+            { type: 'Low', count: lowCount },
+            { type: 'HighSchoolOrCollege', count: highSchoolCount },
+            { type: 'Bachelors', count: bachelorsCount },
+            { type: 'Graduate', count: graduateCount }
+        ])
+    })
+    .catch((error) => console.error('Error loading the JSON file:', error));
 
 
 function generateDonutChart(data) {
