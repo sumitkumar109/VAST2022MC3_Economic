@@ -249,10 +249,14 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 export function updateBarGraph(selectedEducationLevel) {
-
-    if (selectedEducationLevel) {
+    if (selectedEducationLevel != "ALL") {
         svg.selectAll(".startBars, .endBars")
             .attr("opacity", d => (d.category === selectedEducationLevel) ? 1 : 0.3);
+    }
+
+    else {
+        svg.selectAll(".startBars, .endBars")
+            .attr("opacity", 1);
     }
 }
 

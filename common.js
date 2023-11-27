@@ -105,7 +105,7 @@ function generateDonutChart(data) {
                 updateLineChart("");
                 updateGraph("ALL");
                 updateMapChart("");
-                updateBarGraph("");
+                updateBarGraph("ALL");
                 updateRadarChart("", false);
                 updatevisual("");
             } else {
