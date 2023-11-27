@@ -19,12 +19,11 @@ export function updateLineChart(educationLevel = "") {
   svg.selectAll("*").remove();
 
   svg.append("text")
-  .attr("x", width / 2)
-  .attr("y", 0) // Adjust the Y position as needed
-  .attr("text-anchor", "middle")
-  .attr("font-size", "20px") // Set the font size as needed
-  .attr("font-family", "Georgia")
-  .text("Education Level Distribution");
+    .attr("class", "allText")
+    .attr("x", width / 2)
+    .attr("y", 2) // Adjust the Y position as needed
+    .attr("text-anchor", "middle")
+    .text("Education Level Distribution");
 
   let filename = "modified_financial_journal.csv";
 
@@ -98,12 +97,15 @@ export function updateLineChart(educationLevel = "") {
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat("%Y-%m")))
       .selectAll("text") // select all the text elements for the x-axis
+      .attr("class", "axisTicks")
       .attr("transform", "rotate(-20)") // rotate the text
       .style("text-anchor", "end"); // set the text-anchor to 'end' which aligns the text to the end of the tick
 
     // Add X axis label:
     svg
       .append("text")
+      .attr("class", "axisTicks")
+
       .attr("text-anchor", "end")
       .attr("x", width / 2 + margin.left)
       .attr("y", height + margin.top + 25) // You might need to adjust this to position your x-axis label correctly

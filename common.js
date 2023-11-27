@@ -56,6 +56,7 @@ function generateDonutChart(data) {
         .attr("height", height);
     
     svg.append("text")
+    .attr("class", "allText")
     .attr("x", width / 2)
     .attr("y", 25) // Adjust the Y position as needed
     .attr("text-anchor", "middle")

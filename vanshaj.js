@@ -162,20 +162,30 @@ function plotPieScatter(data) {
     svg.selectAll("*").remove()
     height = +svg.style("height").replace("px", '');
     width = +svg.style("width").replace("px", '');
+    svg.append("text")
+        .attr("class", "allText")
+        .attr("x", width / 2)
+        .attr("y", 25) // Adjust the Y position as needed
+        .attr("text-anchor", "middle")
+        .attr("font-size", "24px") // Set the font size as needed
+        .attr("font-family", "Georgia")
+        .text("Monthly Expenditure Trend")
+
     var margin = { top: 10, bottom: 30, left: 35, right: 20 }
     chartHeight = height - margin.top - margin.bottom
     chartWidth = width - margin.left - margin.right
 
     const g = svg.append("g")
-        .attr('transform', `translate(${margin.left + 10}, ${margin.top})`)
+        .attr('transform', `translate(${margin.left + 15}, ${margin.top})`)
 
     var xScale = d3.scaleLinear()
         .domain([0, 15])
-        .range([0, chartWidth])
+        .range([0, chartWidth - 60])
 
     var xAxis = d3.axisBottom(xScale)
 
     g.append("text")
+    .attr("class", "axisLabels")
         .attr("transform", `translate(${chartWidth / 2},${chartHeight + 20})`)
         .style("text-anchor", "middle")
         .text("Month Number")
@@ -428,7 +438,7 @@ function plotPieScatter(data) {
 
 function showPieLegends(width) {
     var svg = d3.select("#vanshaj")
-    var lst = ["Shelter", "Education", "Food", "Recreation"]
+    var lst = ["Food", "Shelter", "Recreation", "Education"]
 
     var legendWidth = 20;
     var legendPadding = 50;
@@ -437,7 +447,7 @@ function showPieLegends(width) {
 
     var legend = svg.append('g')
         .attr('class', 'legend')
-        .attr('transform', `translate(20, 10)`);
+        .attr('transform', `translate(30, 10)`);
 
     var legendItems = legend.selectAll('.legend-item')
         .data(lst)
@@ -445,7 +455,7 @@ function showPieLegends(width) {
         .append('g')
         .attr('class', 'legend-item')
         .attr('transform', function (d, i) {
-            return 'translate(' + (i * (legendItemWidth + 45)) + ', 0)';
+            return 'translate(' + (i * (legendItemWidth + 55)) + ', 15)';
         });
 
     legendItems.append('circle')
@@ -460,10 +470,12 @@ function showPieLegends(width) {
         });
 
     legendItems.append('text')
+        .attr("class", "legendText")
         .attr('x', legendWidth + 10)
         .attr('y', legendHeight / 2)
         .attr('dy', '0.35em')
         .attr('style', 'font: Georgia')
+
         .text(function (d) {
             return d;
         });

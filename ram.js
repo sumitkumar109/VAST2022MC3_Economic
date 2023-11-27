@@ -168,9 +168,10 @@ export function updatevisual(education_level = "") {
   // const height = 500 - margin.top - margin.bottom;
   const svg = d3.select("#ram")
   const width = +svg.style("width").replace("px", '') - margin.left - margin.right - 60;
-  const height = +svg.style("height").replace("px", '') - margin.top - margin.bottom;
+  const height = +svg.style("height").replace("px", '') - margin.top - margin.bottom - 30;
 
   svg.append("text")
+    .attr("class", "allText")
     .attr("x", width / 2 + 200)
     .attr("y", 25) // Adjust the Y position as needed
     .attr("text-anchor", "middle")
@@ -179,7 +180,7 @@ export function updatevisual(education_level = "") {
     .text("Education Level Distribution");
 
   var g = svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    .attr("transform", `translate(${margin.left}, ${margin.top + 30})`);
 
   d3.csv("data/ram/after_visual.csv").then(csvData => {
     const filteredData = csvData.map(d => ({
@@ -292,6 +293,7 @@ export function updatevisual(education_level = "") {
 
     // X-axis label
     g.append('text')
+      .attr("class", "axisLabels")
       .attr('x', width / 2)
       .attr('y', height + margin.bottom - 10)
       .style('text-anchor', 'middle')
@@ -299,6 +301,7 @@ export function updatevisual(education_level = "") {
 
     // Y-axis label
     g.append('text')
+      .attr("class", "axisLabels")
       .attr('transform', 'rotate(-90)')
       .attr('x', -height / 2)
       .attr('y', -margin.left + 15)
@@ -310,7 +313,7 @@ export function updatevisual(education_level = "") {
       .data(stackedData.map(d => d.key))
       .enter().append('g')
       .attr('class', 'legend')
-      .attr('transform', (_, i) => `translate(${i * 95},-20)`);
+      .attr('transform', (_, i) => `translate(${i * 120},-20)`);
 
 
     legend.append('rect')
@@ -320,6 +323,8 @@ export function updatevisual(education_level = "") {
       .attr('fill', color);
 
     legend.append('text')
+      .attr("class", "legendText")
+
       .attr('x', -30)
       .attr('y', 9)
       .attr('dy', '.35em')

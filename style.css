@@ -36,6 +36,8 @@
     height: 500px;
 }
 
+
+
 textarea {
     resize: none;
     border: 1px solid #e0e0e0;
@@ -155,12 +157,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #FEFFFE;
+
 }
 
 #mainDiv {
     display: flex;
     height: 100%;
     width: 100%;
+
 }
 
 #leftDiv {
@@ -169,6 +174,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 1px;
+
     /* Adjust the gap as needed */
 }
 
@@ -178,18 +184,29 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 10px;
+    border: 1px solid black;
 }
 
 #rightDiv {
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin: 10px;
+   
 }
 
 #rightTopDiv {
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
+
+}
+
+#rightTopTopDiv,
+#rightTopBottomDiv {
+    margin-bottom: 10px;
 }
 
 #rightTopTopDiv,
@@ -201,4 +218,42 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid black;
+
+}
+
+#ProjectTitle {
+    color: black;
+    font: 50px Georgia;
+    font-weight: 800;
+}
+
+.allText {
+    fill: black;
+    font-weight: bolder;
+    font: 30px Georgia;
+    margin-top: 10px;
+}
+
+.legendText {
+    fill: black;
+    font-weight: bolder;
+    margin-top: 5px;
+    font: 18px Georgia;
+
+}
+
+
+.axisLabels {
+    fill: black;
+    font-weight: bolder;
+    margin-top: 5px;
+    font: 15px Georgia;
+}
+
+.axisTicks {
+    fill: black;
+    font-weight: bolder;
+    margin-top: 5px;
+    font: 16px Georgia;
 }

@@ -72,12 +72,12 @@ function drawRadarChart(data, color) {
         .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
 
     g.append("text")
+        .attr("class", "allText")
         .attr("x", cfg.w / 2)
         .attr("y", -40) // Adjust the Y position as needed
         .attr("text-anchor", "middle")
-        .attr("font-size", "24px") // Set the font size as needed
-        .attr("font-family", "Georgia")
-        .text("Education Level Distribution");
+
+        .text("Job Market Readiness Radar");
 
     for (var j = 0; j < cfg.levels; j++) {
         var levelFactor = cfg.factor * radius * ((j + 1) / cfg.levels);

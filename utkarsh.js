@@ -8,7 +8,7 @@ var chartHeight = height - margin.top - margin.bottom;
 var chartWidth = width - margin.left - margin.right;
 
 document.addEventListener("DOMContentLoaded", function () {
-
+    
     svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left - 30},${margin.top + 50})`);
 
     // var textarea = document.getElementById("utkarsh_description");
@@ -37,12 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 svg.selectAll("*").remove();
 
                 svg.append("text")
-                .attr("x", width / 2)
-                .attr("y", 5) // Adjust the Y position as needed
-                .attr("text-anchor", "middle")
-                .attr("font-size", "20px") // Set the font size as needed
-                .attr("font-family", "Georgia")
-                .text("Education Level Distribution");
+                    .attr("text-anchor", "middle")
+                    .attr("class", "allText")
+                    .attr("x", width / 2)
+                    .attr("y", 5) // Adjust the Y position as needed
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", "20px") // Set the font size as needed
+                    .attr("font-family", "Georgia")
+                    .text("Education Level Distribution");
 
                 var selectedValue = ageDropdown.value;
                 selectedValue = selectedValue.split("-");
@@ -124,6 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     .attr('transform', `translate(${margin.left},${chartHeight + margin.top})`);
 
                 svg.append("text")
+                    .attr("class", "axisLabels")
+
                     .attr("transform", `translate(${margin.left + chartWidth / 2},${height - margin.bottom + 50})`)
                     .style("text-anchor", "middle")
                     .text("Education Level")
@@ -139,6 +143,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     .attr('transform', `translate(${margin.left},${margin.top})`)
 
                 svg.append("text")
+                    .attr("class", "axisLabels")
+
                     .attr("transform", "rotate(-90)")
                     .attr("y", margin.left / 2 - 50)
                     .attr("x", 0 - (chartHeight / 2))

@@ -17,12 +17,10 @@ var nishanthanSvg = d3.select("#nishanthan");
 // textarea.value += "\n \t \t \t \t \t- Nishanthan Rengaharan";
 
 nishanthanSvg.append("text")
-  .attr("x", +nishanthanSvg.style("width").replace("px", '') / 2)
-  .attr("y", 25) // Adjust the Y position as needed
-  .attr("text-anchor", "middle")
-  .attr("font-size", "20px") // Set the font size as needed
-  .attr("font-family", "Georgia")
-  .text("Education Level Distribution");
+    .attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 100)
+    .attr("y", 25) // Adjust the Y position as needed
+    .attr("class", "allText")
+    .text("Rental and population Distribution");
 
 // Append an SVG element for the background image
 backgroundSvg = nishanthanSvg.append("svg").attr("class", "map");
