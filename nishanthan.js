@@ -24,8 +24,8 @@ nishanthanSvg.append("text")
 .attr("class", "allText")
 .text("Rental and population Distribution");
 
-var xScale = d3.scaleLinear().range([20, 1053]); 
-var yScale = d3.scaleLinear().range([1137, 7]); 
+var xScale = d3.scaleLinear().range([280, 873]); 
+var yScale = d3.scaleLinear().range([875, 200]); 
 
 colorScale = d3.scaleLinear()
     .range(d3.schemeTableau10);
@@ -63,9 +63,9 @@ function processData(data) {
 
 function setupSimulation(data) {
     var simulation = d3.forceSimulation(data)
-        .force("x", d3.forceX(function (d) { return xScale(d.x); }).strength(0.1))
-        .force("y", d3.forceY(function (d) { return yScale(d.y); }).strength(0.1))
-        .force("collide", d3.forceCollide(function (d) { return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7; }).iterations(2).strength(0.4))
+        .force("x", d3.forceX(function (d) { return xScale(d.x); }).strength(10.1))
+        .force("y", d3.forceY(function (d) { return yScale(d.y); }).strength(10.1))
+        .force("collide", d3.forceCollide(function (d) { return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7; }).iterations(2).strength(0.3))
         .stop();
 
     for (var i = 0; i < 200; ++i) simulation.tick();
@@ -77,10 +77,10 @@ function addRectangles(data, svg, xScale, yScale, colorScale) {
         .enter().append("rect")
         .attr("class", "point")
         .attr("x", function (d) {
-            return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+            return d.x - 17 - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5 ;
         })
         .attr("y", function (d) {
-            return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+            return d.y - 200 - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
         })
         .attr("width", function (d) {
             return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
@@ -168,10 +168,10 @@ export function updateMapChart(educationLevel) {
                 .enter().append("rect")
                 .attr("class", "point")
                 .attr("x", function (d) {
-                    return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                    return d.x -17 - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
                 })
                 .attr("y", function (d) {
-                    return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                    return d.y -200 - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
                 })
                 .attr("width", function (d) {
                     return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
@@ -195,10 +195,10 @@ export function updateMapChart(educationLevel) {
             .enter().append("rect")
             .attr("class", "point")
             .attr("x", function (d) {
-                return d.x - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                return d.x -17 - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
             })
             .attr("y", function (d) {
-                return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
+                return d.y -200 - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
             })
             .attr("width", function (d) {
                 return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
