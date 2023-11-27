@@ -46,13 +46,22 @@ function generateDonutChart(data) {
     console.log(data);
     const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
-    const width = 570;
-    const height = 380;
+    const xsvg = d3.select("#sumit2");
+    const width = +xsvg.style("width").replace("px", '');
+    const height = +xsvg.style("height").replace("px", '');
     const radius = Math.min(width, height) / 2;
 
     const svg = d3.select("#sumit2")
         .attr("width", width)
         .attr("height", height);
+    
+    svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", 25) // Adjust the Y position as needed
+    .attr("text-anchor", "middle")
+    .attr("font-size", "24px") // Set the font size as needed
+    .attr("font-family", "Georgia")
+    .text("Education Level Distribution");
 
     const countGroup = svg.append("g")
         .attr("transform", `translate(${width / 2},${height / 2})`);
@@ -61,8 +70,8 @@ function generateDonutChart(data) {
         .value((d) => d.count);
 
     const arc = d3.arc()
-        .innerRadius(radius * 0.5)
-        .outerRadius(radius * 0.9);
+        .innerRadius(radius * 0.45)
+        .outerRadius(radius * 0.8);
 
     const arcs = svg.selectAll("arc")
         .data(pie(data))

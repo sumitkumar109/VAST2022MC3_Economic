@@ -2,9 +2,10 @@
 // textarea.value = "Sumit 1";
 
 // Set dimensions and margins for the graph
-var margin = { top: 20, right: 20, bottom: 20, left: 75 };
-var width = 650 - margin.left - margin.right; // Adjust as needed
-var height = 470 - margin.top - margin.bottom; // Adjust as needed
+var margin = { top: 20, right: 20, bottom: 50, left: 75 };
+const xsvg = d3.select("#sumit2");
+var width = +xsvg.style("width").replace("px", '') - margin.left - margin.right; // Adjust as needed
+var height = +xsvg.style("height").replace("px", '') - margin.top - margin.bottom; // Adjust as needed
 
 // Append SVG object to the div with id "sumit1"
 const svg = d3
@@ -16,6 +17,14 @@ const svg = d3
 
 export function updateLineChart(educationLevel = "") {
   svg.selectAll("*").remove();
+
+  svg.append("text")
+  .attr("x", width / 2)
+  .attr("y", 0) // Adjust the Y position as needed
+  .attr("text-anchor", "middle")
+  .attr("font-size", "20px") // Set the font size as needed
+  .attr("font-family", "Georgia")
+  .text("Education Level Distribution");
 
   let filename = "modified_financial_journal.csv";
 

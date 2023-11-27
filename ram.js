@@ -169,6 +169,15 @@ export function updatevisual(education_level = "") {
   const svg = d3.select("#ram")
   const width = +svg.style("width").replace("px", '') - margin.left - margin.right - 60;
   const height = +svg.style("height").replace("px", '') - margin.top - margin.bottom;
+
+  svg.append("text")
+    .attr("x", width / 2 + 200)
+    .attr("y", 25) // Adjust the Y position as needed
+    .attr("text-anchor", "middle")
+    .attr("font-size", "20px") // Set the font size as needed
+    .attr("font-family", "Georgia")
+    .text("Education Level Distribution");
+
   var g = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 

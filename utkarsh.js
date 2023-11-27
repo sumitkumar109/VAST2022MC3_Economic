@@ -9,7 +9,7 @@ var chartWidth = width - margin.left - margin.right;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left - 30},${margin.top + 50})`);;
+    svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left - 30},${margin.top + 50})`);
 
     // var textarea = document.getElementById("utkarsh_description");
     // textarea.value = "This is a multi-bar graph that represents earnings vs education-groups.";
@@ -35,6 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
             ageDropdown.addEventListener("change", function () {
 
                 svg.selectAll("*").remove();
+
+                svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", 5) // Adjust the Y position as needed
+                .attr("text-anchor", "middle")
+                .attr("font-size", "20px") // Set the font size as needed
+                .attr("font-family", "Georgia")
+                .text("Education Level Distribution");
 
                 var selectedValue = ageDropdown.value;
                 selectedValue = selectedValue.split("-");
