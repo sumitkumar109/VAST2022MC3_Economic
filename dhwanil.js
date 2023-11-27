@@ -1,6 +1,4 @@
 
-// var textarea = document.getElementById("dhwanil_description");
-// textarea.value = "dhwanil";
 //document.body.style.zoom = "50%";
 var educationData = {
     'Low': { "Jobs": 119, "Participants": 84, "JobChange": 267 },
@@ -76,7 +74,7 @@ function drawRadarChart(data, color) {
     g.append("text")
         .attr("class", "allText")
         .attr("x", cfg.w / 2)
-        .attr("y", -40) // Adjust the Y position as needed
+        .attr("y", -40) 
         .attr("text-anchor", "middle")
 
         .text("Job Market Readiness Radar");

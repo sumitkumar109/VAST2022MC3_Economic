@@ -12,14 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
     svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left - 30},${margin.top + 50})`);
 
-    // var textarea = document.getElementById("utkarsh_description");
-    // textarea.value = "This is a multi-bar graph that represents earnings vs education-groups.";
-    // textarea.value += "\n \t * It describes how well each group was doing at the start and end of the study.";
-    // textarea.value += "\n \t * The main aim here is to tell the story of well job changes served each group.";
-    // textarea.value += "\n \t * The dropdown allows you to choose the age range you desire.";
-    // textarea.value += "\n \t * Hover over the bars to find out how much income each group had.";
-    // textarea.value += "\n \t \t \t \t \t \t \t \t \t \t \t \t \t \t - Utkarsh Singh";
-
     d3.csv('data/utkarsh/Start.csv', { encoding: 'UTF-8' })
     d3.csv('data/utkarsh/End.csv', { encoding: 'UTF-8' })
 
@@ -41,9 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     .attr("text-anchor", "middle")
                     .attr("class", "allText")
                     .attr("x", width / 2)
-                    .attr("y", 5) // Adjust the Y position as needed
+                    .attr("y", 5) 
                     .attr("text-anchor", "middle")
-                    .attr("font-size", "20px") // Set the font size as needed
+                    .attr("font-size", "20px") 
                     .attr("font-family", "Georgia")
                     .text("Education Level Distribution");
 

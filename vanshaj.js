@@ -23,8 +23,6 @@ var colorScale = d3.scaleOrdinal()
 
 document.addEventListener("DOMContentLoaded", function () {
     var svg = d3.select("#vanshaj");
-    // var textarea = document.getElementById("vanshaj_description");
-    // textarea.value = "vanshaj";
 
     Promise.all([d3.csv('datasets/ExpenseDataset.csv')])
         .then(function (data) {

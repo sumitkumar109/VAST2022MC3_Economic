@@ -5,20 +5,16 @@ import { updateBarGraph } from "./utkarsh.js";
 import { updateRadarChart } from "./dhwanil.js";
 import { updatevisual } from "./ram.js";
 
-// var textarea = document.getElementById("sumit2_description");
-// textarea.value = "Sumit 2";
 //document.body.style.zoom = "50%";
-// Load the JSON file using fetch
+
 fetch('data_preprocessing/participant_education.json')
     .then((response) => response.json())
     .then((data) => {
-        // Initialize counters for different education levels
         let lowCount = 0;
         let highSchoolCount = 0;
         let bachelorsCount = 0;
         let graduateCount = 0;
 
-        // Iterate through the objects in the JSON data
         data.forEach((participant) => {
             const educationLevel = participant.educationLevel;
             if (educationLevel === 'Low') {
@@ -58,9 +54,9 @@ function generateDonutChart(data) {
     svg.append("text")
     .attr("class", "allText")
     .attr("x", width / 2)
-    .attr("y", 25) // Adjust the Y position as needed
+    .attr("y", 25) 
     .attr("text-anchor", "middle")
-    .attr("font-size", "24px") // Set the font size as needed
+    .attr("font-size", "24px") 
     .attr("font-family", "Georgia")
     .text("Education Level Distribution");
 

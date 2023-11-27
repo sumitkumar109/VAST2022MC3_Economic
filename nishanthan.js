@@ -10,39 +10,26 @@ var adata;
 var nishanthanSvg = d3.select("#nishanthan")
                     .attr("width", 1100)
                     .attr("height", 675);
-// var textarea = document.getElementById("nishanthan_description");
-// textarea.value = "This map of the city's blocks and apartment complexes describes the Ohio city's rental information.";
-// textarea.value += "\n \t * This graph describes the residential areas of the city";
-// textarea.value += "\n \t * This graph also visualizes the high rental and low rental areas";
-// textarea.value += "\n \t * The rent increases when you move towards the center of the city";
-// textarea.value += "\n \t * The number of rooms per occupant decreases when you move towards the center of the city";
-// textarea.value += "\n \t * The size of the squares indicate the number of rooms occupied by each person";
-// textarea.value += "\n \t \t \t \t \t- Nishanthan Rengaharan";
-
-// Append an SVG element for the background image
 
 backgroundSvg = nishanthanSvg.append("svg").attr("class", "map");
 
-// Append the background image to the SVG
 backgroundSvg.append("image")
-    .attr("xlink:href", "./data/nishanthan/BaseMap.png") // URL of the background image
-    .attr("width", 1100) // Same as the SVG width
+    .attr("xlink:href", "./data/nishanthan/BaseMap.png") 
+    .attr("width", 1100) 
     .attr("height", 675);
 
 nishanthanSvg.append("text")
 .attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 100)
-.attr("y", 25) // Adjust the Y position as needed
+.attr("y", 25) 
 .attr("class", "allText")
 .text("Rental and population Distribution");
 
-// Set up scales for x, y axes, and color
-var xScale = d3.scaleLinear().range([20, 1053]); // width of the plot
-var yScale = d3.scaleLinear().range([1137, 7]); // height of the plot
+var xScale = d3.scaleLinear().range([20, 1053]); 
+var yScale = d3.scaleLinear().range([1137, 7]); 
 
 colorScale = d3.scaleLinear()
-    .range(d3.schemeTableau10); // darker green to darker red // color range from green to red
+    .range(d3.schemeTableau10);
 
-// Load CSV data and overlay points on the image
 d3.csv("./data/nishanthan/Apartments.csv").then(function (data) {
     processData(data);
     setupSimulation(data);
@@ -50,7 +37,6 @@ d3.csv("./data/nishanthan/Apartments.csv").then(function (data) {
     addLegend(nishanthanSvg, colorScale);
     adata = data;
 
-    // Check if the provided education level is valid
     if (validEducationLevels.includes(educationLevel)) {
         updateMapChart(educationLevel);
     }
@@ -70,7 +56,6 @@ function processData(data) {
         d.apartmentId = +d.apartmentId;
     });
 
-    // Update the scales based on the data range
     xScale.domain(d3.extent(data, function (d) { return d.x; }));
     yScale.domain(d3.extent(data, function (d) { return d.y; }));
     colorScale.domain([d3.min(data, function (d) { return d.rentalCost; }) + 400, d3.max(data, function (d) { return d.rentalCost; })]);
@@ -160,31 +145,24 @@ function addLegend(svg, colorScale) {
 }
 
 export function updateMapChart(educationLevel) {
-    // Valid education levels
-
-    // Check if the provided education level is valid
     if (validEducationLevels.includes(educationLevel)) {
-        // Load the combined data CSV file
+        
         d3.csv('./data/nishanthan/combined_data.csv').then(function (combinedData) {
-            // Filter data based on the provided education level
+            
             var filteredData = combinedData.filter(function (d) {
                 return d.educationLevel === educationLevel;
             });
 
-            // Extract apartmentIds from the filtered data
             var apartmentIds = filteredData.map(function (d) {
                 return +d.apartmentId;
             });
 
-            // Filter Apartments.csv data based on the extracted apartmentIds
             var filteredApartments = adata.filter(function (apartment) {
                 return apartmentIds.includes(apartment.apartmentId);
             });
 
-            // Remove existing rectangles
             backgroundSvg.selectAll("rect").remove();
 
-            // Add rectangles for each point on the background SVG
             backgroundSvg.selectAll("rect")
                 .data(filteredApartments)
                 .enter().append("rect")
@@ -210,11 +188,8 @@ export function updateMapChart(educationLevel) {
             console.log(error);
         });
     } else {
-        // If education level is not valid, plot rectangles for all data
-        // Remove existing rectangles
         backgroundSvg.selectAll("rect").remove();
 
-        // Add rectangles for each point on the background SVG
         backgroundSvg.selectAll("rect")
             .data(adata)
             .enter().append("rect")

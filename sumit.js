@@ -1,13 +1,9 @@
-// var textarea = document.getElementById("sumit1_description");
-// textarea.value = "Sumit 1";
 //document.body.style.zoom = "50%";
-// Set dimensions and margins for the graph
 var margin = { top: 20, right: 20, bottom: 50, left: 75 };
 const xsvg = d3.select("#sumit2");
-var width = +xsvg.style("width").replace("px", '') - margin.left - margin.right; // Adjust as needed
-var height = +xsvg.style("height").replace("px", '') - margin.top - margin.bottom; // Adjust as needed
+var width = +xsvg.style("width").replace("px", '') - margin.left - margin.right;
+var height = +xsvg.style("height").replace("px", '') - margin.top - margin.bottom;
 
-// Append SVG object to the div with id "sumit1"
 const svg = d3
   .select("#sumit1")
   .attr("width", width + margin.left + margin.right)
@@ -21,7 +17,7 @@ export function updateLineChart(educationLevel = "") {
   svg.append("text")
     .attr("class", "allText")
     .attr("x", width / 2)
-    .attr("y", 2) // Adjust the Y position as needed
+    .attr("y", 2) 
     .attr("text-anchor", "middle")
     .text("Education Level Distribution");
 
@@ -38,9 +34,8 @@ export function updateLineChart(educationLevel = "") {
   }
 
   const path = "data_preprocessing/" + filename;
-  // Read the data (assuming the file path and format are correct)
+  
   d3.csv(path).then(function (data) {
-    // Group the data by month
     const sumByCategory = Array.from(
       d3.rollup(
         data,
@@ -50,7 +45,6 @@ export function updateLineChart(educationLevel = "") {
       )
     );
 
-    // Map to a structure suitable for d3.stack()
     let dataset = sumByCategory.map(([month, categories]) => {
       const entries = { month: d3.timeParse("%Y-%m")(month) };
       for (const [category, total] of categories) {
@@ -77,16 +71,13 @@ export function updateLineChart(educationLevel = "") {
       )
     );
 
-    // List of subgroups (categories)
     const categories = ["Education", "Food", "Recreation"];
 
-    // Transpose the dataset to convert it into a format suitable for multi-line chart
     const transposedData = categories.map((category) => ({
       name: category,
       values: dataset.map((d) => ({ date: d.month, value: d[category] })),
     }));
 
-    // Add X axis
     const x = d3
       .scaleTime()
       .domain(d3.extent(dataset, (d) => d.month))
@@ -96,23 +87,21 @@ export function updateLineChart(educationLevel = "") {
       .append("g")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat("%Y-%m")))
-      .selectAll("text") // select all the text elements for the x-axis
+      .selectAll("text") 
       .attr("class", "axisTicks")
-      .attr("transform", "rotate(-20)") // rotate the text
-      .style("text-anchor", "end"); // set the text-anchor to 'end' which aligns the text to the end of the tick
+      .attr("transform", "rotate(-20)") 
+      .style("text-anchor", "end"); 
 
-    // Add X axis label:
     svg
       .append("text")
       .attr("class", "axisTicks")
 
       .attr("text-anchor", "end")
       .attr("x", width / 2 + margin.left)
-      .attr("y", height + margin.top + 25) // You might need to adjust this to position your x-axis label correctly
+      .attr("y", height + margin.top + 25) 
       .style("font-size", "15px")
       .text("Time (YYYY-MM)");
 
-    // Add Y axis
     const y = d3
       .scaleLinear()
       .domain([
@@ -122,26 +111,22 @@ export function updateLineChart(educationLevel = "") {
       .range([height, 0]);
     svg.append("g").call(d3.axisLeft(y));
 
-    // Add Y axis label:
     svg
       .append("text")
       .attr("text-anchor", "end")
       .attr("transform", "rotate(-90)")
-      .attr("y", -margin.left + 20) // This positions the label to the left of the y-axis
-      .attr("x", -margin.top - height / 2 + 20) // You might need to adjust this as well
+      .attr("y", -margin.left + 20) 
+      .attr("x", -margin.top - height / 2 + 20) 
       .style("font-size", "15px")
       .text("Monthly Revenue ($)");
 
-    // Color palette
     const color = d3.scaleOrdinal().domain(categories).range(d3.schemeTableau10);
 
-    // Define the line function
     const line = d3
       .line()
       .x((d) => x(d.date))
       .y((d) => y(d.value));
 
-    // Add the lines
     const lines = svg
       .selectAll(".line")
       .data(transposedData)
@@ -153,7 +138,6 @@ export function updateLineChart(educationLevel = "") {
       .style("fill", "none")
       .style("stroke-width", 3);
 
-    // Add legend (optional, if space permits)
     svg
       .selectAll("mydots")
       .data(categories)
