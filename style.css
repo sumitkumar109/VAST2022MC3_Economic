@@ -146,7 +146,7 @@ h1 {
     text-align: center;
     color: black;
     font-family: 'Georgia';
-    margin-top: 150px;
+    margin-top: 25px;
     font: 80;
 }
 
@@ -165,7 +165,7 @@ body {
     display: flex;
     height: 100%;
     width: 100%;
-
+    zoom: 50%;
 }
 
 #leftDiv {
@@ -174,7 +174,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 1px;
-
+    zoom: 75%;
     /* Adjust the gap as needed */
 }
 
@@ -224,7 +224,7 @@ body {
 
 #ProjectTitle {
     color: black;
-    font: 50px Georgia;
+    font: 24px Georgia;
     font-weight: 800;
 }
 

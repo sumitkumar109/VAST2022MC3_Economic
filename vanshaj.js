@@ -1,5 +1,4 @@
 
-//document.body.style.zoom = "100%";
 var globalExpenseDataset = []
 var globalData = []
 var educationLevelList = []

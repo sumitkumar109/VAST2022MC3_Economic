@@ -5,7 +5,6 @@ import { updateBarGraph } from "./utkarsh.js";
 import { updateRadarChart } from "./dhwanil.js";
 import { updatevisual } from "./ram.js";
 
-//document.body.style.zoom = "50%";
 let selectedArc = null;
 
 fetch('data_preprocessing/participant_education.json')
@@ -90,7 +89,7 @@ function generateDonutChart(data) {
                 .text(d.data.type + ": " + d.data.count);
         })
         .on("mouseout", function () {
-            if(this !== selectedArc) { // Only reset if it's not the selected arc
+            if(this !== selectedArc) {
                 d3.select(this)
                     .attr("stroke-width", 1);
             }
@@ -111,7 +110,7 @@ function generateDonutChart(data) {
             } else {
                 d3.select(selectedArc)
                     .attr("stroke-width", 1);
-                selectedArc = this; // Update the selected arc
+                selectedArc = this;
                 d3.select(this)
                     .attr("stroke-width", 4);
                 updateLineChart(d.data.type);

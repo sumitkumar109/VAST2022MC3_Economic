@@ -1,4 +1,3 @@
-//document.body.style.zoom = "50%";
 var margin = { top: 20, right: 20, bottom: 50, left: 75 };
 const xsvg = d3.select("#sumit2");
 var width = +xsvg.style("width").replace("px", '') - margin.left - margin.right;
