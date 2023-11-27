@@ -297,7 +297,7 @@ export function updatevisual(education_level = "")
     .attr('x', -height / 2)
     .attr('y', -margin.left + 15)
     .style('text-anchor', 'middle')
-    .text('Amount');
+    .text('Expenditure  Amount');
   
     // Create a legend
   const legend = svg.selectAll('.legend')
