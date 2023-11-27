@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var textarea = document.getElementById("ram_description");
     textarea.value = "ram";
 });
-  function normalChart(){
+ /* function normalChart(){
   const margin = { top: 60, right: 40, bottom: 50, left: 50 };
   const width = 650 - margin.left - margin.right;
   const height = 500 - margin.top - margin.bottom;
@@ -18,24 +18,24 @@ document.addEventListener("DOMContentLoaded", function() {
   d3.csv("data/ram/after_visual.csv").then(data => {
   data.forEach(d => {
     d.Month = d3.timeParse('%Y-%m')(d.Month);
-    d['Education Expenses'] = +d['Education Expenses'];
-    d['Food Expenses'] = +d['Food Expenses'];
-    d['Recreation Expenses'] = +d['Recreation Expenses'];
-    d['Rent Adjustment'] = +d['Rent Adjustment'];
-    d['Shelter Expenses'] = +d['Shelter Expenses'];
-    d['Total_Wage'] = +d['Total_Wage'];
-    d['Total_expense'] = +d['Total_expense'];
+    d['Education'] = +d['Education'];
+    d['Food'] = +d['Food'];
+    d['Recreation'] = +d['Recreation'];
+    d['Rent'] = +d['Rent'];
+    d['Shelter'] = +d['Shelter'];
+    d['Wage'] = +d['Wage'];
+    d['expense'] = +d['expense'];
   });
   const groupedData = d3.rollup(
     data,
     values => ({
-      'Education Expenses': d3.sum(values, d => d['Education Expenses']),
-      'Food Expenses': d3.sum(values, d => d['Food Expenses']),
-      'Recreation Expenses': d3.sum(values, d => d['Recreation Expenses']),
-      'Rent Adjustment': d3.sum(values, d => d['Rent Adjustment']),
-      'Shelter Expenses': d3.sum(values, d => d['Shelter Expenses']),
-      'Total_Wage': d3.sum(values, d => d['Total_Wage']),
-      'Total_expense': d3.sum(values, d => d['Total_expense']),
+      'Education': d3.sum(values, d => d['Education']),
+      'Food': d3.sum(values, d => d['Food']),
+      'Recreation': d3.sum(values, d => d['Recreation']),
+      'Rent': d3.sum(values, d => d['Rent']),
+      'Shelter': d3.sum(values, d => d['Shelter']),
+      'Wage': d3.sum(values, d => d['Wage']),
+      'expense': d3.sum(values, d => d['expense']),
     }),
     d => d.Month
   );
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // Create a stack generator
   const stack = d3.stack()
-    .keys(['Education Expenses', 'Food Expenses', 'Recreation Expenses', 'Rent Adjustment', 'Shelter Expenses', 'Total_Wage', 'Total_expense'])
+    .keys(['Education', 'Food', 'Recreation', 'Rent', 'Shelter', 'Wage', 'expense'])
     .order(d3.stackOrderNone)
     .offset(d3.stackOffsetWiggle);
 
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .on('mouseleave', mouseleave);
 
   // Create x-axis
-  const xAxis = d3.axisBottom(xScale);
+  const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b \'%y'));;
   svg.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(xAxis);
@@ -142,23 +142,24 @@ document.addEventListener("DOMContentLoaded", function() {
     .data(stackedData.map(d => d.key))
     .enter().append('g')
     .attr('class', 'legend')
-    .attr('transform', (_, i) => `translate(0,${i * 20})`);
+    .attr('transform', (_, i) => `translate(${i * 95},-50)`);
+
 
   legend.append('rect')
-    .attr('x', width - 18)
+    .attr('x', -50)
     .attr('width', 18)
     .attr('height', 18)
     .attr('fill', color);
 
   legend.append('text')
-    .attr('x', width - 24)
+    .attr('x', -30)
     .attr('y', 9)
     .attr('dy', '.35em')
-    .style('text-anchor', 'end')
+    .style('text-anchor', 'start')
     .text(d => d);  
     
  });
-} 
+} */
 
 export function updatevisual(education_level = "")
 {
@@ -177,26 +178,26 @@ export function updatevisual(education_level = "")
  d3.csv("data/ram/after_visual.csv").then(csvData => {
     const filteredData = csvData.map(d => ({
       Month: d3.timeParse('%Y-%m')(d.Month),
-      'Education Expenses': +d['Education Expenses'],
-      'Food Expenses': +d['Food Expenses'],
-      'Recreation Expenses': +d['Recreation Expenses'],
-      'Rent Adjustment': +d['Rent Adjustment'],
-      'Shelter Expenses': +d['Shelter Expenses'],
-      'Total_Wage': +d['Total_Wage'],
-      'Total_expense': +d['Total_expense'],
+      'Education': +d['Education'],
+      'Food': +d['Food'],
+      'Recreation': +d['Recreation'],
+      'Rent': +d['Rent'],
+      'Shelter': +d['Shelter'],
+      'Wage': +d['Wage'],
+      'expense': +d['expense'],
       'educationLevel': d['educationLevel']
     })).filter(d => education_level === "" || d.educationLevel === education_level);
 
     const groupedData = d3.rollup(
     filteredData,
     values => ({
-      'Education Expenses': d3.sum(values, d => d['Education Expenses']),
-      'Food Expenses': d3.sum(values, d => d['Food Expenses']),
-      'Recreation Expenses': d3.sum(values, d => d['Recreation Expenses']),
-      'Rent Adjustment': d3.sum(values, d => d['Rent Adjustment']),
-      'Shelter Expenses': d3.sum(values, d => d['Shelter Expenses']),
-      'Total_Wage': d3.sum(values, d => d['Total_Wage']),
-      'Total_expense': d3.sum(values, d => d['Total_expense']),
+      'Education': d3.sum(values, d => d['Education']),
+      'Food': d3.sum(values, d => d['Food']),
+      'Recreation': d3.sum(values, d => d['Recreation']),
+      'Rent': d3.sum(values, d => d['Rent']),
+      'Shelter': d3.sum(values, d => d['Shelter']),
+      'Wage': d3.sum(values, d => d['Wage']),
+      'expense': d3.sum(values, d => d['expense']),
     }),
     d => d.Month
   );
@@ -206,7 +207,7 @@ export function updatevisual(education_level = "")
   console.log(summarizedData)
   // Create a stack generator
   const stack = d3.stack()
-    .keys(['Education Expenses', 'Food Expenses', 'Recreation Expenses', 'Rent Adjustment', 'Shelter Expenses', 'Total_Wage', 'Total_expense'])
+    .keys(['Education', 'Food', 'Recreation', 'Rent', 'Shelter', 'Wage', 'expense'])
     .order(d3.stackOrderNone)
     .offset(d3.stackOffsetWiggle);
 
@@ -273,13 +274,13 @@ export function updatevisual(education_level = "")
     .on('mouseleave', mouseleave);
 
   // Create x-axis
-  const xAxis = d3.axisBottom(xScale);
+  const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%b \'%y'));
   svg.append('g')
     .attr('transform', `translate(0, ${height})`)
     .call(xAxis);
 
   // Create y-axis
-  const yAxis = d3.axisLeft(yScale);
+  const yAxis = d3.axisLeft(yScale).tickFormat(d3.format('.2s'));
   svg.append('g')
     .call(yAxis);
 
@@ -294,33 +295,33 @@ export function updatevisual(education_level = "")
   svg.append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -height / 2)
-    .attr('y', -margin.left + 20)
+    .attr('y', -margin.left + 15)
     .style('text-anchor', 'middle')
     .text('Amount');
-
+  
     // Create a legend
   const legend = svg.selectAll('.legend')
     .data(stackedData.map(d => d.key))
     .enter().append('g')
     .attr('class', 'legend')
-    .attr('transform', (_, i) => `translate(0, ${i * 20})`);
+    .attr('transform', (_, i) => `translate(${i * 95},-50)`);
 
 
   legend.append('rect')
-    .attr('x', width - 18)
+    .attr('x', -50)
     .attr('width', 18)
     .attr('height', 18)
     .attr('fill', color);
 
   legend.append('text')
-    .attr('x', width - 24)
+    .attr('x', -30)
     .attr('y', 9)
     .attr('dy', '.35em')
-    .style('text-anchor', 'end')
+    .style('text-anchor', 'start')
     .text(d => d);  
 
   });
 }
-normalChart();
+//normalChart();
 //const education_level = 'Low'
 updatevisual();
