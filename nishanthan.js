@@ -1,3 +1,4 @@
+//document.body.style.zoom = "50%";
 var colorScale;
 var backgroundSvg;
 var educationLevel = "";
@@ -6,7 +7,9 @@ var adata;
 
 
 
-var nishanthanSvg = d3.select("#nishanthan");
+var nishanthanSvg = d3.select("#nishanthan")
+                    .attr("width", 1100)
+                    .attr("height", 675);
 // var textarea = document.getElementById("nishanthan_description");
 // textarea.value = "This map of the city's blocks and apartment complexes describes the Ohio city's rental information.";
 // textarea.value += "\n \t * This graph describes the residential areas of the city";
@@ -16,14 +19,21 @@ var nishanthanSvg = d3.select("#nishanthan");
 // textarea.value += "\n \t * The size of the squares indicate the number of rooms occupied by each person";
 // textarea.value += "\n \t \t \t \t \t- Nishanthan Rengaharan";
 
-nishanthanSvg.append("text")
-    .attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 100)
-    .attr("y", 25) // Adjust the Y position as needed
-    .attr("class", "allText")
-    .text("Rental and population Distribution");
-
 // Append an SVG element for the background image
+
 backgroundSvg = nishanthanSvg.append("svg").attr("class", "map");
+
+// Append the background image to the SVG
+backgroundSvg.append("image")
+    .attr("xlink:href", "./data/nishanthan/BaseMap.png") // URL of the background image
+    .attr("width", 1100) // Same as the SVG width
+    .attr("height", 675);
+
+nishanthanSvg.append("text")
+.attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 100)
+.attr("y", 25) // Adjust the Y position as needed
+.attr("class", "allText")
+.text("Rental and population Distribution");
 
 // Set up scales for x, y axes, and color
 var xScale = d3.scaleLinear().range([20, 1053]); // width of the plot
@@ -88,10 +98,10 @@ function addRectangles(data, svg, xScale, yScale, colorScale) {
             return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
         })
         .attr("width", function (d) {
-            return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+            return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
         })
         .attr("height", function (d) {
-            return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+            return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
         })
         .attr("fill", function (d) {
             return colorScale(d.rentalCost);
@@ -186,10 +196,10 @@ export function updateMapChart(educationLevel) {
                     return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
                 })
                 .attr("width", function (d) {
-                    return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                    return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
                 })
                 .attr("height", function (d) {
-                    return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                    return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
                 })
                 .attr("fill", function (d) {
                     return colorScale(d.rentalCost);
@@ -216,10 +226,10 @@ export function updateMapChart(educationLevel) {
                 return d.y - Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 5;
             })
             .attr("width", function (d) {
-                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
             })
             .attr("height", function (d) {
-                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 10;
+                return Math.sqrt(d.numberOfRooms / d.maxOccupancy) * 7;
             })
             .attr("fill", function (d) {
                 return colorScale(d.rentalCost);

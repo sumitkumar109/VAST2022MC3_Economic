@@ -67,7 +67,7 @@ h1 {
 .map {
     height: 1144px;
     width: 1076px;
-    background: url("./data/nishanthan/BaseMap.png") center center no-repeat;
+    /*background: url("./data/nishanthan/BaseMap.png") center center no-repeat;*/
     position: relative;
     left: 150px;
 }
@@ -158,8 +158,8 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #FEFFFE;
-
 }
+
 
 #mainDiv {
     display: flex;

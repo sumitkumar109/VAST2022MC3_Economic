@@ -1,6 +1,7 @@
 
 // var textarea = document.getElementById("dhwanil_description");
 // textarea.value = "dhwanil";
+//document.body.style.zoom = "50%";
 var educationData = {
     'Low': { "Jobs": 119, "Participants": 84, "JobChange": 267 },
     'HighSchoolOrCollege': { "Jobs": 705, "Participants": 525, "JobChange": 2005 },

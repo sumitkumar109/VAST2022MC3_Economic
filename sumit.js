@@ -1,6 +1,6 @@
 // var textarea = document.getElementById("sumit1_description");
 // textarea.value = "Sumit 1";
-
+//document.body.style.zoom = "50%";
 // Set dimensions and margins for the graph
 var margin = { top: 20, right: 20, bottom: 50, left: 75 };
 const xsvg = d3.select("#sumit2");

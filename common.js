@@ -7,7 +7,7 @@ import { updatevisual } from "./ram.js";
 
 // var textarea = document.getElementById("sumit2_description");
 // textarea.value = "Sumit 2";
-
+//document.body.style.zoom = "50%";
 // Load the JSON file using fetch
 fetch('data_preprocessing/participant_education.json')
     .then((response) => response.json())
