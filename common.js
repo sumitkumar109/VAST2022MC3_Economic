@@ -6,6 +6,7 @@ import { updateRadarChart } from "./dhwanil.js";
 import { updatevisual } from "./ram.js";
 
 //document.body.style.zoom = "50%";
+let selectedArc = null;
 
 fetch('data_preprocessing/participant_education.json')
     .then((response) => response.json())
@@ -89,18 +90,37 @@ function generateDonutChart(data) {
                 .text(d.data.type + ": " + d.data.count);
         })
         .on("mouseout", function () {
-            d3.select(this)
-                .attr("stroke-width", 1);
+            if(this !== selectedArc) { // Only reset if it's not the selected arc
+                d3.select(this)
+                    .attr("stroke-width", 1);
+            }
             countGroup.select("text")
                 .text("");
         })
         .on("click", function (event, d) {
-            updateLineChart(d.data.type);
-            updateGraph(d.data.type);
-            updateMapChart(d.data.type);
-            updateBarGraph(d.data.type);
-            updateRadarChart(d.data.type, false);
-            updatevisual(d.data.type);
+            if (this == selectedArc) {
+                d3.select(selectedArc)
+                .attr("stroke-width", 1);
+
+                updateLineChart("");
+                updateGraph("ALL");
+                updateMapChart("");
+                updateBarGraph("");
+                updateRadarChart("", false);
+                updatevisual("");
+            } else {
+                d3.select(selectedArc)
+                    .attr("stroke-width", 1);
+                selectedArc = this; // Update the selected arc
+                d3.select(this)
+                    .attr("stroke-width", 4);
+                updateLineChart(d.data.type);
+                updateGraph(d.data.type);
+                updateMapChart(d.data.type);
+                updateBarGraph(d.data.type);
+                updateRadarChart(d.data.type, false);
+                updatevisual(d.data.type);
+            }
         });
 
     countGroup.append("text")
@@ -108,5 +128,5 @@ function generateDonutChart(data) {
         .attr("dy", "0.3em")
         .text("")
         .attr("fill", "black")
-        .attr("font-size", "15px");
+        .attr("font-size", "24px");
 }
