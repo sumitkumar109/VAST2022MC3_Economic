@@ -10,7 +10,8 @@ var chartWidth = width - margin.left - margin.right;
 
 document.addEventListener("DOMContentLoaded", function () {
     
-    svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left + 130},${margin.top + 180})`);
+    svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g")
+    .attr("transform", `translate(${margin.left + 65},${margin.top + 160})`);
 
     d3.csv('data/utkarsh/Start.csv', { encoding: 'UTF-8' })
     d3.csv('data/utkarsh/End.csv', { encoding: 'UTF-8' })
@@ -33,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     .attr("text-anchor", "middle")
                     .attr("class", "allText")
                     .attr("x", width / 2)
-                    .attr("y", 5) 
+                    .attr("y", -145) 
                     .attr("text-anchor", "middle")
                     .attr("font-size", "20px") 
                     .attr("font-family", "Georgia")
-                    .text("Education Level Distribution");
+                    .text("Wage Change Comparison among Residents");
 
                 var selectedValue = ageDropdown.value;
                 selectedValue = selectedValue.split("-");

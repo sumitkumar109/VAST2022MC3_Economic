@@ -19,10 +19,10 @@ backgroundSvg.append("image")
     .attr("height", 675);
 
 nishanthanSvg.append("text")
-.attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 100)
+.attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 120)
 .attr("y", 25) 
 .attr("class", "allText")
-.text("Rental and population Distribution");
+.text("Rental and population Density Distribution");
 
 var xScale = d3.scaleLinear().range([280, 873]); 
 var yScale = d3.scaleLinear().range([875, 200]); 
@@ -98,7 +98,7 @@ function addRectangles(data, svg, xScale, yScale, colorScale) {
 function addLegend(svg, colorScale) {
     var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", "translate(950,50)");
+        .attr("transform", "translate(950,80)");
 
     var legendRectSize = 18;
     var legendSpacing = 12;

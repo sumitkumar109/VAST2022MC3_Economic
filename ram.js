@@ -14,12 +14,12 @@ export function updatevisual(education_level = "") {
 
   svg.append("text")
     .attr("class", "allText")
-    .attr("x", width / 2 + 200)
-    .attr("y", 25) 
+    .attr("x", width / 2 + 100)
+    .attr("y", 28) 
     .attr("text-anchor", "middle")
     .attr("font-size", "20px") 
     .attr("font-family", "Georgia")
-    .text("Education Level Distribution");
+    .text("Cost of Living Distribution");
 
   var g = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top + 30})`);

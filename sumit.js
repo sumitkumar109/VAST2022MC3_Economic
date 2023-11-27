@@ -17,9 +17,9 @@ export function updateLineChart(educationLevel = "") {
   svg.append("text")
     .attr("class", "allText")
     .attr("x", width / 2)
-    .attr("y", 2) 
+    .attr("y", 5) 
     .attr("text-anchor", "middle")
-    .text("Education Level Distribution");
+    .text("Business Performance Distribution");
 
   let filename = "modified_financial_journal.csv";
 

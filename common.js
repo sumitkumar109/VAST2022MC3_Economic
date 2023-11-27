@@ -55,7 +55,7 @@ function generateDonutChart(data) {
     svg.append("text")
     .attr("class", "allText")
     .attr("x", width / 2)
-    .attr("y", 25) 
+    .attr("y", 35) 
     .attr("text-anchor", "middle")
     .attr("font-size", "24px") 
     .attr("font-family", "Georgia")
