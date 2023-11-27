@@ -10,7 +10,7 @@ var chartWidth = width - margin.left - margin.right;
 
 document.addEventListener("DOMContentLoaded", function () {
     
-    svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left - 30},${margin.top + 50})`);
+    svg = d3.select("#utkarsh").attr("width", width).attr("height", height).append("g").attr("transform", `translate(${margin.left + 130},${margin.top + 180})`);
 
     d3.csv('data/utkarsh/Start.csv', { encoding: 'UTF-8' })
     d3.csv('data/utkarsh/End.csv', { encoding: 'UTF-8' })
