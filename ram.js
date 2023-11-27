@@ -1,4 +1,3 @@
-//document.body.style.zoom = "50%";
 document.addEventListener("DOMContentLoaded", function () {
   var svg = d3.select("#ram");
 });

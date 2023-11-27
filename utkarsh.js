@@ -1,4 +1,3 @@
-//document.body.style.zoom = "50%";
 var startObject = {};
 var endObject = {};
 var svg;
