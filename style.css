@@ -193,7 +193,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: 10px;
-   
+
 }
 
 #rightTopDiv {
@@ -232,7 +232,7 @@ body {
     fill: black;
     font-weight: bolder;
     font: 30px Georgia;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .legendText {

@@ -16,6 +16,7 @@ var educationLevelColors = {
     'Graduate': d3.schemeTableau10[3]
 };
 
+var educationList = ['Low', 'Bachelors', 'Graduate', 'HighSchoolOrCollege']
 export function updateRadarChart(educationLevel, initialUpdate = true) {
     if (!initialUpdate) {
         var svg = d3.select("#dhwanil");
@@ -43,8 +44,8 @@ function drawRadarChart(data, color) {
 
 
     var cfg = {
-        w: 600,
-        h: 600,
+        w: 800,
+        h: 800,
         factor: 1,
         factorLegend: 0.85,
         levels: 3,
@@ -122,7 +123,31 @@ function drawRadarChart(data, color) {
         .attr("x", (d, i) => cfg.w / 2 * (1 - cfg.factorLegend * Math.sin(i * cfg.radians / total)) - 60 * Math.sin(i * cfg.radians / total))
         .attr("y", (d, i) => cfg.h / 2 * (1 - Math.cos(i * cfg.radians / total)) - 20 * Math.cos(i * cfg.radians / total));
 
+    var legend = g.selectAll(".spiderLegend")
+        .data(educationList)
+        .enter()
+        .append("g")
+        .attr("class", "spiderLegend")
+        .attr("transform", function (d, i) {
+            return "translate(" + 150 * i + "," + -100 + ")";
+        });
+
+    legend.append("circle")
+        .attr("r", 7)
+        .style("fill", function (d, i) {
+            return educationLevelColors[d];
+        })
+
+
+    legend.append("text")
+        .text(function (d) { return d; })
+        .attr("class", "legendText")
+        .attr('x', 30)
+        .attr('y', 5)
+
+
     var dataValues = [];
+
     formattedData.forEach((d, i) => {
         dataValues.push([
             cfg.w / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / cfg.maxValue) * cfg.factor * Math.sin(i * cfg.radians / total)),

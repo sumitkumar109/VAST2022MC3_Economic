@@ -166,9 +166,9 @@ function plotPieScatter(data) {
     svg.append("text")
         .attr("class", "allText")
         .attr("x", width / 2)
-        .attr("y", 25) // Adjust the Y position as needed
+        .attr("y", 25)
         .attr("text-anchor", "middle")
-        .attr("font-size", "24px") // Set the font size as needed
+        .attr("font-size", "24px")
         .attr("font-family", "Georgia")
         .text("Monthly Expenditure Trend")
 
@@ -186,7 +186,7 @@ function plotPieScatter(data) {
     var xAxis = d3.axisBottom(xScale)
 
     g.append("text")
-    .attr("class", "axisLabels")
+        .attr("class", "axisLabels")
         .attr("transform", `translate(${chartWidth / 2},${chartHeight + 20})`)
         .style("text-anchor", "middle")
         .text("Month Number")
@@ -297,8 +297,8 @@ function plotPieScatter(data) {
                 return colors(d.data[0])
             })
             .attr("stroke-width", 2)
-            .transition() // Add transition
-            .duration(1000) // Set the duration of the transition (in milliseconds)
+            .transition()
+            .duration(1000)
             .attrTween("d", function (d) {
                 var radius = d3.select(this.parentNode).property("radius");
                 var interpolate = d3.interpolate(0, pieRadiusFunct(radius));
@@ -354,8 +354,8 @@ function plotPieScatter(data) {
                 var toolTipG = toolTipSvg.append('g')
                     .attr('transform', `translate(${50}, ${20})`)
                 toolTipSvg.append("text")
-                    .attr("x", innerBarWidth / 2 + 20)  // Adjust the x-coordinate as needed
-                    .attr("y", 15)  // Adjust the y-coordinate as needed
+                    .attr("x", innerBarWidth / 2 + 20)
+                    .attr("y", 15)
                     .attr("text-anchor", "middle")
                     .style("font-size", "12px")
                     .style("font-weight", "bold")
