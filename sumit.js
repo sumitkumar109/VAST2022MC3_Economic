@@ -10,6 +10,9 @@ const svg = d3
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
+const tooltip = d3.select("body").append("div")
+  .attr("class", "utkarsh-tooltip");
+
 export function updateLineChart(educationLevel = "") {
   svg.selectAll("*").remove();
 
@@ -166,6 +169,85 @@ export function updateLineChart(educationLevel = "") {
       })
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle");
+
+        svg.selectAll(".dot1")
+            .data(transposedData[0].values)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr("cx", (d) => x(d.date))
+            .attr("cy", (d) => y(d.value))
+            .attr("r", 5)
+            .attr("opacity", 1)
+            .style("fill",d3.schemeTableau10[0])
+            .on("mouseover", (event, d) => {
+              console.log(d);
+              tooltip.style("display", "block")
+              .html(`
+              <div class="tooltip-text">
+                  <strong>Date:</strong> ${d.date.getFullYear()}-${d.date.getMonth()}<br>
+                  <strong>Monthly Revenue:</strong> ${d.value.toFixed(2)}
+              </div>
+          `);
+            })
+            .on("mousemove", function (event) {
+              tooltip.style("left", (event.pageX + 2) + "px")
+                  .style("top", (event.pageY + 2) + "px");
+          })
+          .on("mouseout", function () {
+              tooltip.style("display", "none");
+          });
+
+          svg.selectAll(".dot2")
+            .data(transposedData[1].values)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr("cx", (d) => x(d.date))
+            .attr("cy", (d) => y(d.value))
+            .attr("r", 5)
+            .attr("opacity", 1)
+            .style("fill",d3.schemeTableau10[1])
+            .on("mouseover", (event, d) => {
+              tooltip.style("display", "block")
+              .html(`
+              <div class="tooltip-text">
+                  <strong>Date:</strong> ${d.date.getFullYear()}-${d.date.getMonth()}<br>
+                  <strong>Monthly Revenue:</strong> ${d.value.toFixed(2)}
+              </div>
+          `);
+            })
+            .on("mousemove", function (event) {
+              tooltip.style("left", (event.pageX + 2) + "px")
+                  .style("top", (event.pageY + 2) + "px");
+          })
+          .on("mouseout", function () {
+              tooltip.style("display", "none");
+          });
+
+          svg.selectAll(".dot3")
+            .data(transposedData[2].values)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr("cx", (d) => x(d.date))
+            .attr("cy", (d) => y(d.value))
+            .attr("r", 5)
+            .attr("opacity", 1)
+            .style("fill",d3.schemeTableau10[2])
+            .on("mouseover", (event, d) => {
+              tooltip.style("display", "block")
+              .html(`
+              <div class="tooltip-text">
+                  <strong>Date:</strong> ${d.date.getFullYear()}-${d.date.getMonth()}<br>
+                  <strong>Monthly Revenue:</strong> $${d.value.toFixed(2)}
+              </div>
+          `);
+            })
+            .on("mousemove", function (event) {
+              tooltip.style("left", (event.pageX + 2) + "px")
+                  .style("top", (event.pageY + 2) + "px");
+          })
+          .on("mouseout", function () {
+              tooltip.style("display", "none");
+          });
   });
 }
 
