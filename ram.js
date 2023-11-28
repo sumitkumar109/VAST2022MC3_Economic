@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   var svg = d3.select("#ram");
 });
+const checkboxes = document.querySelectorAll('.educationCheckbox');
+  checkboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', function() {
+            updatevisual();});
+  });
 
 export function updatevisual(education_level = "") {
   d3.select("#ram").selectAll("*").remove();  
@@ -23,6 +28,12 @@ export function updatevisual(education_level = "") {
   var g = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top + 30})`);
 
+    // Get selected checkboxes
+  const checkboxes = document.querySelectorAll('.educationCheckbox');
+  const checkedCheckboxes = Array.from(checkboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+
   d3.csv("data/ram/after_visual.csv").then(csvData => {
     const filteredData = csvData.map(d => ({
       Month: d3.timeParse('%Y-%m')(d.Month),
@@ -34,7 +45,9 @@ export function updatevisual(education_level = "") {
       'Wage': +d['Wage'],
       'expense': +d['expense'],
       'educationLevel': d['educationLevel']
-    })).filter(d => education_level === "" || d.educationLevel === education_level);
+    })).filter(d => {
+    return (checkedCheckboxes.length === 0 || checkedCheckboxes.includes(d.educationLevel)) &&
+      (education_level === "" || d.educationLevel === education_level);});
 
     const groupedData = d3.rollup(
       filteredData,

@@ -21,7 +21,7 @@ nishanthanSvg.append("text")
 .attr("x", +nishanthanSvg.style("width").replace("px", '') / 2 - 120)
 .attr("y", 25) 
 .attr("class", "allText")
-.text("Rental and population Density Distribution");
+.text("Spatial Distribution of Rent & population Density");
 
 var xScale = d3.scaleLinear().range([280, 873]); 
 var yScale = d3.scaleLinear().range([875, 200]); 
