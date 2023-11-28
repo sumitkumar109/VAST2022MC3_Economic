@@ -124,7 +124,7 @@ function generateDonutChart(data) {
     countGroup.append("text")
         .attr("text-anchor", "middle")
         .attr("dy", "0.3em")
-        .text("")
+        .text("Click on an arc to interact")
         .attr("fill", "black")
-        .attr("font-size", "24px");
+        .attr("font-size", "32px");
 }
