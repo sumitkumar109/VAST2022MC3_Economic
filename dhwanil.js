@@ -42,7 +42,6 @@ document.querySelectorAll('input[type="checkbox"].dhwanilCheckbox').forEach(func
 
 
         var selectedCheckboxes = document.querySelectorAll('input[type="checkbox"].dhwanilCheckbox:checked');
-        console.log(selectedCheckboxes, "******************************")
         var selectedEducationLevels = [];
 
         selectedCheckboxes.forEach(function (checkbox) {
