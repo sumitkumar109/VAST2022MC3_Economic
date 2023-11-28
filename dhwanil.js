@@ -34,14 +34,14 @@ updateRadarChart("Low");
 updateRadarChart("HighSchoolOrCollege");
 updateRadarChart("Bachelors");
 updateRadarChart("Graduate");
-document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+document.querySelectorAll('input[type="checkbox"].dhwanilCheckbox').forEach(function (checkbox) {
 
     checkbox.addEventListener('change', function () {
         var svg = d3.select("#dhwanil");
         svg.selectAll(".radarArea").remove();
 
 
-        var selectedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        var selectedCheckboxes = document.querySelectorAll('input[type="checkbox"].dhwanilCheckbox:checked');
         console.log(selectedCheckboxes, "******************************")
         var selectedEducationLevels = [];
 
