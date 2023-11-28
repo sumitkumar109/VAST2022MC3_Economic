@@ -39,7 +39,6 @@ fetch('data_preprocessing/participant_education.json')
 
 
 function generateDonutChart(data) {
-    console.log(data);
     const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
     const xsvg = d3.select("#sumit2");
