@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   var svg = d3.select("#ram");
 });
-const checkboxes = document.querySelectorAll('.educationCheckbox');
-  checkboxes.forEach(checkbox => {
-          checkbox.addEventListener('change', function() {
-            updatevisual();});
+const checkboxes = document.querySelectorAll('.layerCheckbox');
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+    updatevisual();
   });
+});
 
 export function updatevisual(education_level = "") {
   d3.select("#ram").selectAll("*").remove();  
@@ -28,12 +29,6 @@ export function updatevisual(education_level = "") {
   var g = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top + 30})`);
 
-    // Get selected checkboxes
-  const checkboxes = document.querySelectorAll('.educationCheckbox');
-  const checkedCheckboxes = Array.from(checkboxes)
-    .filter(cb => cb.checked)
-    .map(cb => cb.value);
-
   d3.csv("data/ram/after_visual.csv").then(csvData => {
     const filteredData = csvData.map(d => ({
       Month: d3.timeParse('%Y-%m')(d.Month),
@@ -43,30 +38,32 @@ export function updatevisual(education_level = "") {
       'Rent': +d['Rent'],
       'Shelter': +d['Shelter'],
       'Wage': +d['Wage'],
-      'expense': +d['expense'],
+      'Expense': +d['Expense'],
       'educationLevel': d['educationLevel']
-    })).filter(d => {
-    return (checkedCheckboxes.length === 0 || checkedCheckboxes.includes(d.educationLevel)) &&
-      (education_level === "" || d.educationLevel === education_level);});
+    })).filter(d => education_level === "" || d.educationLevel === education_level);
+
+
+    const checkboxes = document.querySelectorAll('.layerCheckbox');
+    const checkedCheckboxes = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+
 
     const groupedData = d3.rollup(
-      filteredData,
-      values => ({
-        'Education': d3.sum(values, d => d['Education']),
-        'Food': d3.sum(values, d => d['Food']),
-        'Recreation': d3.sum(values, d => d['Recreation']),
-        'Rent': d3.sum(values, d => d['Rent']),
-        'Shelter': d3.sum(values, d => d['Shelter']),
-        'Wage': d3.sum(values, d => d['Wage']),
-        'expense': d3.sum(values, d => d['expense']),
-      }),
-      d => d.Month
-    );
-
+        filteredData,
+        values => {
+          const result = {};
+          checkedCheckboxes.forEach(checkbox => {
+            result[checkbox] = d3.sum(values, d => d[checkbox]);
+          });
+          return result;
+        },
+        d => d.Month
+      );
     const summarizedData = Array.from(groupedData, ([key, value]) => ({ Month: key, ...value }));
   
     const stack = d3.stack()
-      .keys(['Education', 'Food', 'Recreation', 'Rent', 'Shelter', 'Wage', 'expense'])
+      .keys(checkedCheckboxes)
       .order(d3.stackOrderNone)
       .offset(d3.stackOffsetWiggle);
 

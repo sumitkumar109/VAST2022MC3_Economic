@@ -1,4 +1,4 @@
-Month,participantId,Education,Food,Recreation,Rent,Shelter,Wage,expense,educationLevel
+Month,participantId,Education,Food,Recreation,Rent,Shelter,Wage,Expense,educationLevel
 2022-03,0,38.01,156.56,173.5026786,0.0,554.99,5656.31,923.07,HighSchoolOrCollege
 2022-03,1,38.01,174.44,316.6136667,0.0,554.99,8934.38,1084.05,HighSchoolOrCollege
 2022-03,2,12.81,169.27,213.8365,0.0,556.55,8519.89,952.47,HighSchoolOrCollege
